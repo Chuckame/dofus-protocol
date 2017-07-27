@@ -1,0 +1,39 @@
+package org.chuckame.dofus2.protocol.messages.game.guild;
+
+import org.chuckame.dofus2.common.io.IDataReader;
+import org.chuckame.dofus2.common.io.IDataWriter;
+import org.chuckame.dofus2.common.io.INetworkMessage;
+
+import lombok.Data;
+import lombok.ToString;
+import lombok.EqualsAndHashCode;
+
+@Data
+@ToString 
+@EqualsAndHashCode
+public class GuildFactsErrorMessage implements INetworkMessage {
+	public static final int MESSAGE_ID = 6424;
+	
+	private int guildId;
+	
+	public GuildFactsErrorMessage() {
+	}
+	
+	public GuildFactsErrorMessage(int guildId) {
+		this.guildId = guildId;
+	}
+	
+	public int getProtocolId() {
+		return MESSAGE_ID;
+	}
+	
+	public void deserialize(IDataReader reader) {
+		this.guildId = reader.readInt();
+		if (guildId < 0)
+			throw new IllegalArgumentException(String.format("Forbidden value on guildId = %s, it doesn't respect the following condition : guildId < 0", guildId));
+	}
+	
+	public void serialize(IDataWriter writer) {
+		writer.writeInt(this.guildId);
+	}
+}
