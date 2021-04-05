@@ -43,10 +43,17 @@ public class KohUpdateMessage implements INetworkMessage {
 		this.nextTickTime = nextTickTime;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.alliances = new LinkedList<>();
@@ -90,6 +97,7 @@ public class KohUpdateMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on nextTickTime = %s, it doesn't respect the following condition : nextTickTime < 0", nextTickTime));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.alliances.size());
 		for (AllianceInformations entry : this.alliances)

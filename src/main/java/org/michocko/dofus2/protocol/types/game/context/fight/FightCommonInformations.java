@@ -52,7 +52,7 @@ public class FightCommonInformations implements INetworkType {
 		this.fightTeams = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			FightTeamInformations entry = ProtocolTypeManager.getInstance().<FightTeamInformations>newInstance(reader.readShort());
+			FightTeamInformations entry = (FightTeamInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.fightTeams.add(entry);
 		}

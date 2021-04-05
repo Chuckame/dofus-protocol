@@ -25,10 +25,17 @@ public class TeleportToBuddyCloseMessage implements INetworkMessage {
 		this.buddyId = buddyId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.dungeonId = reader.readShort();
 		if (dungeonId < 0)
@@ -38,6 +45,7 @@ public class TeleportToBuddyCloseMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on buddyId = %s, it doesn't respect the following condition : buddyId < 0", buddyId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.dungeonId);
 		writer.writeInt(this.buddyId);

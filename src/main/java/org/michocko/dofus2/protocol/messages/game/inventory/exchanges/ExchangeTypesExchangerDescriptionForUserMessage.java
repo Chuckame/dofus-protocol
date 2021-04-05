@@ -26,10 +26,17 @@ public class ExchangeTypesExchangerDescriptionForUserMessage implements INetwork
 		this.typeDescription = typeDescription;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.typeDescription = new LinkedList<>();
@@ -40,6 +47,7 @@ public class ExchangeTypesExchangerDescriptionForUserMessage implements INetwork
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.typeDescription.size());
 		for (int entry : this.typeDescription)

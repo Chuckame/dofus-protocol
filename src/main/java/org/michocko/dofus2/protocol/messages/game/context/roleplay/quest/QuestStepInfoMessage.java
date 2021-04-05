@@ -27,15 +27,23 @@ public class QuestStepInfoMessage implements INetworkMessage {
 		this.infos = infos;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
-		this.infos = ProtocolTypeManager.getInstance().<QuestActiveInformations>newInstance(reader.readShort());
+		this.infos = (QuestActiveInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.infos.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.infos.getNetworkTypeId());
 		this.infos.serialize(writer);

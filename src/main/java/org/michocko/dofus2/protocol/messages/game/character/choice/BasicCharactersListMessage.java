@@ -30,21 +30,29 @@ public class BasicCharactersListMessage implements INetworkMessage {
 		this.characters = characters;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.characters = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			CharacterBaseInformations entry = ProtocolTypeManager.getInstance().<CharacterBaseInformations>newInstance(reader.readShort());
+			CharacterBaseInformations entry = (CharacterBaseInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.characters.add(entry);
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.characters.size());
 		for (CharacterBaseInformations entry : this.characters)

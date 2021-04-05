@@ -23,16 +23,24 @@ public class PaddockSellRequestMessage implements INetworkMessage {
 		this.price = price;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.price = reader.readInt();
 		if (price < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on price = %s, it doesn't respect the following condition : price < 0", price));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.price);
 	}

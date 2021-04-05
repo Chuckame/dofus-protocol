@@ -27,10 +27,17 @@ public class PopupWarningMessage implements INetworkMessage {
 		this.content = content;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.lockDuration = reader.readByte();
 		if (lockDuration < 0 || lockDuration > 255)
@@ -39,6 +46,7 @@ public class PopupWarningMessage implements INetworkMessage {
 		this.content = reader.readUTF();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeByte(this.lockDuration);
 		writer.writeUTF(this.author);

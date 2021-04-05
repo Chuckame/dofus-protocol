@@ -28,10 +28,17 @@ public class AccountHouseMessage implements INetworkMessage {
 		this.houses = houses;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.houses = new LinkedList<>();
@@ -43,6 +50,7 @@ public class AccountHouseMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.houses.size());
 		for (AccountHouseInformations entry : this.houses)

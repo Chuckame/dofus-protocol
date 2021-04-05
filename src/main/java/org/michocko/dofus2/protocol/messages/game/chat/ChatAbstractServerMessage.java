@@ -29,10 +29,17 @@ public class ChatAbstractServerMessage implements INetworkMessage {
 		this.fingerprint = fingerprint;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.channel = reader.readSByte();
 		if (channel < 0)
@@ -44,6 +51,7 @@ public class ChatAbstractServerMessage implements INetworkMessage {
 		this.fingerprint = reader.readUTF();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.channel);
 		writer.writeUTF(this.content);

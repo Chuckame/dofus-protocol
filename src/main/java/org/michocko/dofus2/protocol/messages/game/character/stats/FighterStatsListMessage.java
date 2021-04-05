@@ -25,15 +25,23 @@ public class FighterStatsListMessage implements INetworkMessage {
 		this.stats = stats;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.stats = new CharacterCharacteristicsInformations();
 		this.stats.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.stats.serialize(writer);
 	}

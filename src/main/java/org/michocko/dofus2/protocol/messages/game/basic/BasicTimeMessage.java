@@ -25,10 +25,17 @@ public class BasicTimeMessage implements INetworkMessage {
 		this.timezoneOffset = timezoneOffset;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.timestamp = reader.readInt();
 		if (timestamp < 0)
@@ -36,6 +43,7 @@ public class BasicTimeMessage implements INetworkMessage {
 		this.timezoneOffset = reader.readShort();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.timestamp);
 		writer.writeShort(this.timezoneOffset);

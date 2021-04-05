@@ -29,10 +29,17 @@ public class ChallengeInfoMessage implements INetworkMessage {
 		this.dropBonus = dropBonus;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.challengeId = reader.readShort();
 		if (challengeId < 0)
@@ -46,6 +53,7 @@ public class ChallengeInfoMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on dropBonus = %s, it doesn't respect the following condition : dropBonus < 0", dropBonus));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.challengeId);
 		writer.writeInt(this.targetId);

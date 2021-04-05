@@ -29,14 +29,19 @@ public class GameActionFightDispellableEffectMessage extends AbstractGameActionM
 	}
 	
 	@Override
-	public int getNetworkMessageId() {
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
 	@Override
 	public void deserialize(IDataReader reader) {
 		super.deserialize(reader);
-		this.effect = ProtocolTypeManager.getInstance().<AbstractFightDispellableEffect>newInstance(reader.readShort());
+		this.effect = (AbstractFightDispellableEffect) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.effect.deserialize(reader);
 	}
 	

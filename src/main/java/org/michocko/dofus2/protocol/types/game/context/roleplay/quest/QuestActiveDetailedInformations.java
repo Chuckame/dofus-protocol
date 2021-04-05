@@ -48,7 +48,7 @@ public class QuestActiveDetailedInformations extends QuestActiveInformations {
 		this.objectives = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			QuestObjectiveInformations entry = ProtocolTypeManager.getInstance().<QuestObjectiveInformations>newInstance(reader.readShort());
+			QuestObjectiveInformations entry = (QuestObjectiveInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.objectives.add(entry);
 		}

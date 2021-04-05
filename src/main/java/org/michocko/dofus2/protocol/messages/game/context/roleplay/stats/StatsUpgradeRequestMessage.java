@@ -25,10 +25,17 @@ public class StatsUpgradeRequestMessage implements INetworkMessage {
 		this.boostPoint = boostPoint;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.statId = reader.readSByte();
 		if (statId < 0)
@@ -38,6 +45,7 @@ public class StatsUpgradeRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on boostPoint = %s, it doesn't respect the following condition : boostPoint < 0", boostPoint));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.statId);
 		writer.writeShort(this.boostPoint);

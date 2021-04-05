@@ -25,10 +25,17 @@ public class HouseGuildShareRequestMessage implements INetworkMessage {
 		this.rights = rights;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.enable = reader.readBoolean();
 		this.rights = reader.readUInt();
@@ -36,6 +43,7 @@ public class HouseGuildShareRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on rights = %s, it doesn't respect the following condition : rights < 0 || rights > 4.294967295E9", rights));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.enable);
 		writer.writeUInt(this.rights);

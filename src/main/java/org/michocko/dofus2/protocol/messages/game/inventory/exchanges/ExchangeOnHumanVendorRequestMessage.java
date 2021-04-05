@@ -25,10 +25,17 @@ public class ExchangeOnHumanVendorRequestMessage implements INetworkMessage {
 		this.humanVendorCell = humanVendorCell;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.humanVendorId = reader.readInt();
 		if (humanVendorId < 0)
@@ -38,6 +45,7 @@ public class ExchangeOnHumanVendorRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on humanVendorCell = %s, it doesn't respect the following condition : humanVendorCell < 0", humanVendorCell));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.humanVendorId);
 		writer.writeInt(this.humanVendorCell);

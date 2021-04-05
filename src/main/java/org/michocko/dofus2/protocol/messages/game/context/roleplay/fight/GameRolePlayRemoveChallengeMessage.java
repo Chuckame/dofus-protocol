@@ -23,14 +23,22 @@ public class GameRolePlayRemoveChallengeMessage implements INetworkMessage {
 		this.fightId = fightId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.fightId = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.fightId);
 	}

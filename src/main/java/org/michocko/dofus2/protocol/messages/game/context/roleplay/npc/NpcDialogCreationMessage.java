@@ -25,15 +25,23 @@ public class NpcDialogCreationMessage implements INetworkMessage {
 		this.npcId = npcId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.mapId = reader.readInt();
 		this.npcId = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.mapId);
 		writer.writeInt(this.npcId);

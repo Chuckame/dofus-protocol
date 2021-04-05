@@ -23,16 +23,24 @@ public class ShortcutBarAddErrorMessage implements INetworkMessage {
 		this.error = error;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.error = reader.readSByte();
 		if (error < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on error = %s, it doesn't respect the following condition : error < 0", error));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.error);
 	}

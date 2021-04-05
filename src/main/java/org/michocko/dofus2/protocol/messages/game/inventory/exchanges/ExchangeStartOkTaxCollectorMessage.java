@@ -32,10 +32,17 @@ public class ExchangeStartOkTaxCollectorMessage implements INetworkMessage {
 		this.goldInfo = goldInfo;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.collectorId = reader.readInt();
 		int length = reader.readUShort();
@@ -51,6 +58,7 @@ public class ExchangeStartOkTaxCollectorMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on goldInfo = %s, it doesn't respect the following condition : goldInfo < 0", goldInfo));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.collectorId);
 		writer.writeUShort(this.objectsInfos.size());

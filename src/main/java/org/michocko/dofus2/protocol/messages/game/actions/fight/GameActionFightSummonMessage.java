@@ -29,14 +29,19 @@ public class GameActionFightSummonMessage extends AbstractGameActionMessage {
 	}
 	
 	@Override
-	public int getNetworkMessageId() {
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
 	@Override
 	public void deserialize(IDataReader reader) {
 		super.deserialize(reader);
-		this.summon = ProtocolTypeManager.getInstance().<GameFightFighterInformations>newInstance(reader.readShort());
+		this.summon = (GameFightFighterInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.summon.deserialize(reader);
 	}
 	

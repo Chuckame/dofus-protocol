@@ -26,7 +26,12 @@ public class GameContextRemoveElementWithEventMessage extends GameContextRemoveE
 	}
 	
 	@Override
-	public int getNetworkMessageId() {
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	

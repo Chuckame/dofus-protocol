@@ -25,15 +25,23 @@ public class AllianceModificationEmblemValidMessage implements INetworkMessage {
 		this.Alliancemblem = Alliancemblem;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.Alliancemblem = new GuildEmblem();
 		this.Alliancemblem.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.Alliancemblem.serialize(writer);
 	}

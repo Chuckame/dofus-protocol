@@ -23,16 +23,24 @@ public class CharacterCreationResultMessage implements INetworkMessage {
 		this.result = result;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.result = reader.readSByte();
 		if (result < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on result = %s, it doesn't respect the following condition : result < 0", result));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.result);
 	}

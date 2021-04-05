@@ -30,21 +30,29 @@ public class GameFightSynchronizeMessage implements INetworkMessage {
 		this.fighters = fighters;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.fighters = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			GameFightFighterInformations entry = ProtocolTypeManager.getInstance().<GameFightFighterInformations>newInstance(reader.readShort());
+			GameFightFighterInformations entry = (GameFightFighterInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.fighters.add(entry);
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.fighters.size());
 		for (GameFightFighterInformations entry : this.fighters)

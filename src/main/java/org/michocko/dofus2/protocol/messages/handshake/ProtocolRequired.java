@@ -25,10 +25,17 @@ public class ProtocolRequired implements INetworkMessage {
 		this.currentVersion = currentVersion;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.requiredVersion = reader.readInt();
 		if (requiredVersion < 0)
@@ -38,6 +45,7 @@ public class ProtocolRequired implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on currentVersion = %s, it doesn't respect the following condition : currentVersion < 0", currentVersion));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.requiredVersion);
 		writer.writeInt(this.currentVersion);

@@ -27,10 +27,17 @@ public class GameRolePlayArenaFighterStatusMessage implements INetworkMessage {
 		this.accepted = accepted;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.fightId = reader.readInt();
 		this.playerId = reader.readInt();
@@ -39,6 +46,7 @@ public class GameRolePlayArenaFighterStatusMessage implements INetworkMessage {
 		this.accepted = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.fightId);
 		writer.writeInt(this.playerId);

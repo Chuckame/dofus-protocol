@@ -25,15 +25,23 @@ public class ObjectModifiedMessage implements INetworkMessage {
 		this.object = object;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.object = new ObjectItem();
 		this.object.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.object.serialize(writer);
 	}

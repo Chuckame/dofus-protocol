@@ -25,10 +25,17 @@ public class PaddockMoveItemRequestMessage implements INetworkMessage {
 		this.newCellId = newCellId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.oldCellId = reader.readShort();
 		if (oldCellId < 0 || oldCellId > 559)
@@ -38,6 +45,7 @@ public class PaddockMoveItemRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on newCellId = %s, it doesn't respect the following condition : newCellId < 0 || newCellId > 559", newCellId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.oldCellId);
 		writer.writeShort(this.newCellId);

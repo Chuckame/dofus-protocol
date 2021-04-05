@@ -27,10 +27,17 @@ public class BasicDateMessage implements INetworkMessage {
 		this.year = year;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.day = reader.readSByte();
 		if (day < 0)
@@ -43,6 +50,7 @@ public class BasicDateMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on year = %s, it doesn't respect the following condition : year < 0", year));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.day);
 		writer.writeSByte(this.month);

@@ -29,18 +29,26 @@ public class CompassUpdateMessage implements INetworkMessage {
 		this.coords = coords;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.type = reader.readSByte();
 		if (type < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on type = %s, it doesn't respect the following condition : type < 0", type));
-		this.coords = ProtocolTypeManager.getInstance().<MapCoordinates>newInstance(reader.readShort());
+		this.coords = (MapCoordinates) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.coords.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.type);
 		writer.writeShort(this.coords.getNetworkTypeId());

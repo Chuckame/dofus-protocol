@@ -23,14 +23,22 @@ public class JobAllowMultiCraftRequestMessage implements INetworkMessage {
 		this.enabled = enabled;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.enabled = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.enabled);
 	}

@@ -29,10 +29,17 @@ public class GuildInvitedMessage implements INetworkMessage {
 		this.guildInfo = guildInfo;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.recruterId = reader.readInt();
 		if (recruterId < 0)
@@ -42,6 +49,7 @@ public class GuildInvitedMessage implements INetworkMessage {
 		this.guildInfo.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.recruterId);
 		writer.writeUTF(this.recruterName);

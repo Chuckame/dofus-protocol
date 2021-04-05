@@ -36,10 +36,17 @@ public class GameFightEndMessage implements INetworkMessage {
 		this.results = results;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.duration = reader.readInt();
 		if (duration < 0)
@@ -50,12 +57,13 @@ public class GameFightEndMessage implements INetworkMessage {
 		this.results = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			FightResultListEntry entry = ProtocolTypeManager.getInstance().<FightResultListEntry>newInstance(reader.readShort());
+			FightResultListEntry entry = (FightResultListEntry) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.results.add(entry);
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.duration);
 		writer.writeShort(this.ageBonus);

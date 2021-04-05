@@ -30,10 +30,17 @@ public class GuildInformationsPaddocksMessage implements INetworkMessage {
 		this.paddocksInformations = paddocksInformations;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.nbPaddockMax = reader.readSByte();
 		if (nbPaddockMax < 0)
@@ -48,6 +55,7 @@ public class GuildInformationsPaddocksMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.nbPaddockMax);
 		writer.writeUShort(this.paddocksInformations.size());

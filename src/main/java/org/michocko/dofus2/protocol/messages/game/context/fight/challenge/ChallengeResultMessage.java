@@ -25,10 +25,17 @@ public class ChallengeResultMessage implements INetworkMessage {
 		this.success = success;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.challengeId = reader.readShort();
 		if (challengeId < 0)
@@ -36,6 +43,7 @@ public class ChallengeResultMessage implements INetworkMessage {
 		this.success = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.challengeId);
 		writer.writeBoolean(this.success);

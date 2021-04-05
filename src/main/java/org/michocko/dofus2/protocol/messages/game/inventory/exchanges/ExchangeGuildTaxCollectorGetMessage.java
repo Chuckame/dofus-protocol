@@ -42,10 +42,17 @@ public class ExchangeGuildTaxCollectorGetMessage implements INetworkMessage {
 		this.objectsInfos = objectsInfos;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.collectorName = reader.readUTF();
 		this.worldX = reader.readShort();
@@ -70,6 +77,7 @@ public class ExchangeGuildTaxCollectorGetMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUTF(this.collectorName);
 		writer.writeShort(this.worldX);

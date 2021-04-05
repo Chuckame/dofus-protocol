@@ -43,7 +43,7 @@ public class FightTeamInformations extends AbstractFightTeamInformations {
 		this.teamMembers = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			FightTeamMemberInformations entry = ProtocolTypeManager.getInstance().<FightTeamMemberInformations>newInstance(reader.readShort());
+			FightTeamMemberInformations entry = (FightTeamMemberInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.teamMembers.add(entry);
 		}

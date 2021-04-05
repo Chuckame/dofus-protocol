@@ -28,10 +28,17 @@ public class EnabledChannelsMessage implements INetworkMessage {
 		this.disallowed = disallowed;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.channels = new LinkedList<>();
@@ -49,6 +56,7 @@ public class EnabledChannelsMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.channels.size());
 		for (byte entry : this.channels)

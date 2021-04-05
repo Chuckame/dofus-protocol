@@ -27,15 +27,23 @@ public class SpouseInformationsMessage implements INetworkMessage {
 		this.spouse = spouse;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
-		this.spouse = ProtocolTypeManager.getInstance().<FriendSpouseInformations>newInstance(reader.readShort());
+		this.spouse = (FriendSpouseInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.spouse.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.spouse.getNetworkTypeId());
 		this.spouse.serialize(writer);

@@ -29,10 +29,17 @@ public class AllianceCreationValidMessage implements INetworkMessage {
 		this.allianceEmblem = allianceEmblem;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.allianceName = reader.readUTF();
 		this.allianceTag = reader.readUTF();
@@ -40,6 +47,7 @@ public class AllianceCreationValidMessage implements INetworkMessage {
 		this.allianceEmblem.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUTF(this.allianceName);
 		writer.writeUTF(this.allianceTag);

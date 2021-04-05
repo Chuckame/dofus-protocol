@@ -28,10 +28,17 @@ public class HelloConnectMessage implements INetworkMessage {
 		this.key = key;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.salt = reader.readUTF();
 		int length = reader.readUShort();
@@ -43,6 +50,7 @@ public class HelloConnectMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUTF(this.salt);
 		writer.writeUShort(this.key.size());

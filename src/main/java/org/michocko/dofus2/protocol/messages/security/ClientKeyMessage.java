@@ -23,14 +23,22 @@ public class ClientKeyMessage implements INetworkMessage {
 		this.key = key;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.key = reader.readUTF();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUTF(this.key);
 	}

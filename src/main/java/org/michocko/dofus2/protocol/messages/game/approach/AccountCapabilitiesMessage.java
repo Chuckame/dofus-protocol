@@ -31,10 +31,17 @@ public class AccountCapabilitiesMessage implements INetworkMessage {
 		this.status = status;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.accountId = reader.readInt();
 		this.tutorialAvailable = reader.readBoolean();
@@ -47,6 +54,7 @@ public class AccountCapabilitiesMessage implements INetworkMessage {
 		this.status = reader.readSByte();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.accountId);
 		writer.writeBoolean(this.tutorialAvailable);

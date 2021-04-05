@@ -28,10 +28,17 @@ public class StatedMapUpdateMessage implements INetworkMessage {
 		this.statedElements = statedElements;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.statedElements = new LinkedList<>();
@@ -43,6 +50,7 @@ public class StatedMapUpdateMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.statedElements.size());
 		for (StatedElement entry : this.statedElements)

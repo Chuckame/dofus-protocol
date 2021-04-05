@@ -30,10 +30,17 @@ public class InventoryContentMessage implements INetworkMessage {
 		this.kamas = kamas;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.objects = new LinkedList<>();
@@ -48,6 +55,7 @@ public class InventoryContentMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on kamas = %s, it doesn't respect the following condition : kamas < 0", kamas));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.objects.size());
 		for (ObjectItem entry : this.objects)

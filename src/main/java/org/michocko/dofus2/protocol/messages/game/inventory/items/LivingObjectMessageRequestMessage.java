@@ -30,10 +30,17 @@ public class LivingObjectMessageRequestMessage implements INetworkMessage {
 		this.livingObject = livingObject;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.msgId = reader.readShort();
 		if (msgId < 0)
@@ -50,6 +57,7 @@ public class LivingObjectMessageRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on livingObject = %s, it doesn't respect the following condition : livingObject < 0 || livingObject > 4.294967295E9", livingObject));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.msgId);
 		writer.writeUShort(this.parameters.size());

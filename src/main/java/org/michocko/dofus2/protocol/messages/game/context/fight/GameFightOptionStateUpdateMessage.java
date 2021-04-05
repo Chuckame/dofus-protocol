@@ -29,10 +29,17 @@ public class GameFightOptionStateUpdateMessage implements INetworkMessage {
 		this.state = state;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.fightId = reader.readShort();
 		if (fightId < 0)
@@ -46,6 +53,7 @@ public class GameFightOptionStateUpdateMessage implements INetworkMessage {
 		this.state = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.fightId);
 		writer.writeSByte(this.teamId);

@@ -30,10 +30,17 @@ public class GuildFightPlayersEnemiesListMessage implements INetworkMessage {
 		this.playerInfo = playerInfo;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.fightId = reader.readDouble();
 		if (fightId < 0)
@@ -48,6 +55,7 @@ public class GuildFightPlayersEnemiesListMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeDouble(this.fightId);
 		writer.writeUShort(this.playerInfo.size());

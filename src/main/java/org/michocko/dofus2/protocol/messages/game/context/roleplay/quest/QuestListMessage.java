@@ -34,10 +34,17 @@ public class QuestListMessage implements INetworkMessage {
 		this.activeQuests = activeQuests;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.finishedQuestsIds = new LinkedList<>();
@@ -57,12 +64,13 @@ public class QuestListMessage implements INetworkMessage {
 		this.activeQuests = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			QuestActiveInformations entry = ProtocolTypeManager.getInstance().<QuestActiveInformations>newInstance(reader.readShort());
+			QuestActiveInformations entry = (QuestActiveInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.activeQuests.add(entry);
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.finishedQuestsIds.size());
 		for (short entry : this.finishedQuestsIds)

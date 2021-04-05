@@ -25,10 +25,17 @@ public class ContactLookRequestMessage implements INetworkMessage {
 		this.contactType = contactType;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.requestId = reader.readByte();
 		if (requestId < 0 || requestId > 255)
@@ -38,6 +45,7 @@ public class ContactLookRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on contactType = %s, it doesn't respect the following condition : contactType < 0", contactType));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeByte(this.requestId);
 		writer.writeSByte(this.contactType);

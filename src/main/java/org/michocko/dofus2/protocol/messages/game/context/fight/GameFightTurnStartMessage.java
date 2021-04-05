@@ -25,10 +25,17 @@ public class GameFightTurnStartMessage implements INetworkMessage {
 		this.waitTime = waitTime;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.id = reader.readInt();
 		this.waitTime = reader.readInt();
@@ -36,6 +43,7 @@ public class GameFightTurnStartMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on waitTime = %s, it doesn't respect the following condition : waitTime < 0", waitTime));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.id);
 		writer.writeInt(this.waitTime);

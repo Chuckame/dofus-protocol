@@ -36,10 +36,17 @@ public class IdentificationMessage implements INetworkMessage {
 		this.sessionOptionalSalt = sessionOptionalSalt;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.version = new VersionExtended();
 		this.version.deserialize(reader);
@@ -55,6 +62,7 @@ public class IdentificationMessage implements INetworkMessage {
 		this.sessionOptionalSalt = reader.readDouble();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.version.serialize(writer);
 		writer.writeUTF(this.lang);

@@ -82,7 +82,7 @@ public class TaxCollectorInformations implements INetworkType {
 		this.complements = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			TaxCollectorComplementaryInformations entry = ProtocolTypeManager.getInstance().<TaxCollectorComplementaryInformations>newInstance(reader.readShort());
+			TaxCollectorComplementaryInformations entry = (TaxCollectorComplementaryInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.complements.add(entry);
 		}

@@ -43,7 +43,12 @@ public class PartyJoinMessage extends AbstractPartyMessage {
 	}
 	
 	@Override
-	public int getNetworkMessageId() {
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
@@ -63,7 +68,7 @@ public class PartyJoinMessage extends AbstractPartyMessage {
 		this.members = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			PartyMemberInformations entry = ProtocolTypeManager.getInstance().<PartyMemberInformations>newInstance(reader.readShort());
+			PartyMemberInformations entry = (PartyMemberInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.members.add(entry);
 		}

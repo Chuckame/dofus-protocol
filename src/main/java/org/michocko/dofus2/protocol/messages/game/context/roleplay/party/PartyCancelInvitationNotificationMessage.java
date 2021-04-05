@@ -28,7 +28,12 @@ public class PartyCancelInvitationNotificationMessage extends AbstractPartyEvent
 	}
 	
 	@Override
-	public int getNetworkMessageId() {
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	

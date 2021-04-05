@@ -23,14 +23,22 @@ public class MountInformationInPaddockRequestMessage implements INetworkMessage 
 		this.mapRideId = mapRideId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.mapRideId = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.mapRideId);
 	}

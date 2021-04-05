@@ -25,10 +25,17 @@ public class JobCrafterDirectoryRemoveMessage implements INetworkMessage {
 		this.playerId = playerId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.jobId = reader.readSByte();
 		if (jobId < 0)
@@ -38,6 +45,7 @@ public class JobCrafterDirectoryRemoveMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on playerId = %s, it doesn't respect the following condition : playerId < 0", playerId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.jobId);
 		writer.writeInt(this.playerId);

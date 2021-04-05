@@ -40,7 +40,7 @@ public class FightDispellableEffectExtendedInformations implements INetworkType 
 		if (actionId < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on actionId = %s, it doesn't respect the following condition : actionId < 0", actionId));
 		this.sourceId = reader.readInt();
-		this.effect = ProtocolTypeManager.getInstance().<AbstractFightDispellableEffect>newInstance(reader.readShort());
+		this.effect = (AbstractFightDispellableEffect) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.effect.deserialize(reader);
 	}
 	

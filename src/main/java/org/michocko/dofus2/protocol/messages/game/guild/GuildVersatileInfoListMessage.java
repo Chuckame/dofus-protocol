@@ -30,21 +30,29 @@ public class GuildVersatileInfoListMessage implements INetworkMessage {
 		this.guilds = guilds;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.guilds = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			GuildVersatileInformations entry = ProtocolTypeManager.getInstance().<GuildVersatileInformations>newInstance(reader.readShort());
+			GuildVersatileInformations entry = (GuildVersatileInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.guilds.add(entry);
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.guilds.size());
 		for (GuildVersatileInformations entry : this.guilds)

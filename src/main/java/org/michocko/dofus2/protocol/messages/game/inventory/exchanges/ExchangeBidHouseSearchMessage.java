@@ -25,10 +25,17 @@ public class ExchangeBidHouseSearchMessage implements INetworkMessage {
 		this.genId = genId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.type = reader.readInt();
 		if (type < 0)
@@ -38,6 +45,7 @@ public class ExchangeBidHouseSearchMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on genId = %s, it doesn't respect the following condition : genId < 0", genId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.type);
 		writer.writeInt(this.genId);

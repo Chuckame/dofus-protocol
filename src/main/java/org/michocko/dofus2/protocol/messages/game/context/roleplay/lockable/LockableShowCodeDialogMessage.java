@@ -25,10 +25,17 @@ public class LockableShowCodeDialogMessage implements INetworkMessage {
 		this.codeSize = codeSize;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.changeOrUse = reader.readBoolean();
 		this.codeSize = reader.readSByte();
@@ -36,6 +43,7 @@ public class LockableShowCodeDialogMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on codeSize = %s, it doesn't respect the following condition : codeSize < 0", codeSize));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.changeOrUse);
 		writer.writeSByte(this.codeSize);

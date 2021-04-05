@@ -23,14 +23,22 @@ public class GuildInvitationAnswerMessage implements INetworkMessage {
 		this.accept = accept;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.accept = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.accept);
 	}

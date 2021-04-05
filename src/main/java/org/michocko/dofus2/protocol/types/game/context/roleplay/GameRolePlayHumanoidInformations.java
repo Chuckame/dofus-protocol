@@ -40,7 +40,7 @@ public class GameRolePlayHumanoidInformations extends GameRolePlayNamedActorInfo
 	@Override
 	public void deserialize(IDataReader reader) {
 		super.deserialize(reader);
-		this.humanoidInfo = ProtocolTypeManager.getInstance().<HumanInformations>newInstance(reader.readShort());
+		this.humanoidInfo = (HumanInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.humanoidInfo.deserialize(reader);
 		this.accountId = reader.readInt();
 		if (accountId < 0)

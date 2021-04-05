@@ -30,10 +30,17 @@ public class SystemMessageDisplayMessage implements INetworkMessage {
 		this.parameters = parameters;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.hangUp = reader.readBoolean();
 		this.msgId = reader.readShort();
@@ -48,6 +55,7 @@ public class SystemMessageDisplayMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.hangUp);
 		writer.writeShort(this.msgId);

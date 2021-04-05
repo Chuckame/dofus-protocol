@@ -25,15 +25,23 @@ public class InventoryPresetUpdateMessage implements INetworkMessage {
 		this.preset = preset;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.preset = new Preset();
 		this.preset.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.preset.serialize(writer);
 	}

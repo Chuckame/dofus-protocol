@@ -27,16 +27,24 @@ public class AllianceJoinedMessage implements INetworkMessage {
 		this.enabled = enabled;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.allianceInfo = new AllianceInformations();
 		this.allianceInfo.deserialize(reader);
 		this.enabled = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.allianceInfo.serialize(writer);
 		writer.writeBoolean(this.enabled);

@@ -29,10 +29,17 @@ public class GameRolePlayPlayerFightFriendlyAnsweredMessage implements INetworkM
 		this.accept = accept;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.fightId = reader.readInt();
 		this.sourceId = reader.readInt();
@@ -44,6 +51,7 @@ public class GameRolePlayPlayerFightFriendlyAnsweredMessage implements INetworkM
 		this.accept = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.fightId);
 		writer.writeInt(this.sourceId);

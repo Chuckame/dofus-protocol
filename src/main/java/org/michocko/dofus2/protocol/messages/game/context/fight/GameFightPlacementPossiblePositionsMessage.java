@@ -30,10 +30,17 @@ public class GameFightPlacementPossiblePositionsMessage implements INetworkMessa
 		this.teamNumber = teamNumber;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.positionsForChallengers = new LinkedList<>();
@@ -54,6 +61,7 @@ public class GameFightPlacementPossiblePositionsMessage implements INetworkMessa
 			throw new IllegalArgumentException(String.format("Forbidden value on teamNumber = %s, it doesn't respect the following condition : teamNumber < 0", teamNumber));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.positionsForChallengers.size());
 		for (short entry : this.positionsForChallengers)

@@ -23,16 +23,24 @@ public class GuildLevelUpMessage implements INetworkMessage {
 		this.newLevel = newLevel;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.newLevel = reader.readByte();
 		if (newLevel < 2 || newLevel > 200)
 			throw new IllegalArgumentException(String.format("Forbidden value on newLevel = %s, it doesn't respect the following condition : newLevel < 2 || newLevel > 200", newLevel));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeByte(this.newLevel);
 	}

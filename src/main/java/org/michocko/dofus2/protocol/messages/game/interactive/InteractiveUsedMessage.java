@@ -29,10 +29,17 @@ public class InteractiveUsedMessage implements INetworkMessage {
 		this.duration = duration;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.entityId = reader.readInt();
 		if (entityId < 0)
@@ -48,6 +55,7 @@ public class InteractiveUsedMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on duration = %s, it doesn't respect the following condition : duration < 0", duration));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.entityId);
 		writer.writeInt(this.elemId);

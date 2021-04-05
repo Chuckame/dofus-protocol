@@ -56,7 +56,7 @@ public class ObjectItem extends Item {
 		this.effects = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			ObjectEffect entry = ProtocolTypeManager.getInstance().<ObjectEffect>newInstance(reader.readShort());
+			ObjectEffect entry = (ObjectEffect) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.effects.add(entry);
 		}

@@ -49,7 +49,7 @@ public class FightResultPlayerListEntry extends FightResultFighterListEntry {
 		this.additional = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			FightResultAdditionalData entry = ProtocolTypeManager.getInstance().<FightResultAdditionalData>newInstance(reader.readShort());
+			FightResultAdditionalData entry = (FightResultAdditionalData) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.additional.add(entry);
 		}

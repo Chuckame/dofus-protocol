@@ -51,7 +51,7 @@ public class GameFightFighterInformations extends GameContextActorInformations {
 		if (wave < 0 || wave > 4.294967295E9)
 			throw new IllegalArgumentException(String.format("Forbidden value on wave = %s, it doesn't respect the following condition : wave < 0 || wave > 4.294967295E9", wave));
 		this.alive = reader.readBoolean();
-		this.stats = ProtocolTypeManager.getInstance().<GameFightMinimalStats>newInstance(reader.readShort());
+		this.stats = (GameFightMinimalStats) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.stats.deserialize(reader);
 	}
 	

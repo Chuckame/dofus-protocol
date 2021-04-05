@@ -29,7 +29,12 @@ public class CharacterSelectionWithRecolorMessage extends CharacterSelectionMess
 	}
 	
 	@Override
-	public int getNetworkMessageId() {
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	

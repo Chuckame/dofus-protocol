@@ -30,10 +30,17 @@ public class SpellListMessage implements INetworkMessage {
 		this.spells = spells;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.spellPrevisualization = reader.readBoolean();
 		int length = reader.readUShort();
@@ -46,6 +53,7 @@ public class SpellListMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.spellPrevisualization);
 		writer.writeUShort(this.spells.size());

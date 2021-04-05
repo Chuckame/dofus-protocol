@@ -27,10 +27,17 @@ public class DownloadErrorMessage implements INetworkMessage {
 		this.helpUrl = helpUrl;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.errorId = reader.readSByte();
 		if (errorId < 0)
@@ -39,6 +46,7 @@ public class DownloadErrorMessage implements INetworkMessage {
 		this.helpUrl = reader.readUTF();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.errorId);
 		writer.writeUTF(this.message);

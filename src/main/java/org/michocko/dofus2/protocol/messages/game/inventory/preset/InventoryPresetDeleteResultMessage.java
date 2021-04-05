@@ -25,10 +25,17 @@ public class InventoryPresetDeleteResultMessage implements INetworkMessage {
 		this.code = code;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.presetId = reader.readSByte();
 		if (presetId < 0)
@@ -38,6 +45,7 @@ public class InventoryPresetDeleteResultMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on code = %s, it doesn't respect the following condition : code < 0", code));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.presetId);
 		writer.writeSByte(this.code);

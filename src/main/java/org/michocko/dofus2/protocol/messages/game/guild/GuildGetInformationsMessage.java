@@ -23,16 +23,24 @@ public class GuildGetInformationsMessage implements INetworkMessage {
 		this.infoType = infoType;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.infoType = reader.readSByte();
 		if (infoType < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on infoType = %s, it doesn't respect the following condition : infoType < 0", infoType));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.infoType);
 	}

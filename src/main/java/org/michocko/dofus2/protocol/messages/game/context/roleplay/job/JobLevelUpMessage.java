@@ -27,10 +27,17 @@ public class JobLevelUpMessage implements INetworkMessage {
 		this.jobsDescription = jobsDescription;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.newLevel = reader.readSByte();
 		if (newLevel < 0)
@@ -39,6 +46,7 @@ public class JobLevelUpMessage implements INetworkMessage {
 		this.jobsDescription.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.newLevel);
 		this.jobsDescription.serialize(writer);

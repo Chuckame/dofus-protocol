@@ -29,10 +29,17 @@ public class CharacterExperienceGainMessage implements INetworkMessage {
 		this.experienceIncarnation = experienceIncarnation;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.experienceCharacter = reader.readDouble();
 		if (experienceCharacter < 0)
@@ -48,6 +55,7 @@ public class CharacterExperienceGainMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on experienceIncarnation = %s, it doesn't respect the following condition : experienceIncarnation < 0", experienceIncarnation));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeDouble(this.experienceCharacter);
 		writer.writeDouble(this.experienceMount);

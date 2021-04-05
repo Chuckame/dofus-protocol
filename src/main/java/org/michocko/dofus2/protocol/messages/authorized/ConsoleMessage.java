@@ -25,10 +25,17 @@ public class ConsoleMessage implements INetworkMessage {
 		this.content = content;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.type = reader.readSByte();
 		if (type < 0)
@@ -36,6 +43,7 @@ public class ConsoleMessage implements INetworkMessage {
 		this.content = reader.readUTF();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.type);
 		writer.writeUTF(this.content);

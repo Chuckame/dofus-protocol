@@ -28,10 +28,17 @@ public class JobCrafterDirectorySettingsMessage implements INetworkMessage {
 		this.craftersSettings = craftersSettings;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.craftersSettings = new LinkedList<>();
@@ -43,6 +50,7 @@ public class JobCrafterDirectorySettingsMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.craftersSettings.size());
 		for (JobCrafterDirectorySettings entry : this.craftersSettings)

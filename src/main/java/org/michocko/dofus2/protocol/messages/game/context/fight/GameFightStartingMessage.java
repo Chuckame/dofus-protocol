@@ -27,10 +27,17 @@ public class GameFightStartingMessage implements INetworkMessage {
 		this.defenderId = defenderId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.fightType = reader.readSByte();
 		if (fightType < 0)
@@ -39,6 +46,7 @@ public class GameFightStartingMessage implements INetworkMessage {
 		this.defenderId = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.fightType);
 		writer.writeInt(this.attackerId);

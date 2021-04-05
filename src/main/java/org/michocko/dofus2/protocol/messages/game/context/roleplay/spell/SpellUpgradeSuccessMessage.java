@@ -25,10 +25,17 @@ public class SpellUpgradeSuccessMessage implements INetworkMessage {
 		this.spellLevel = spellLevel;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.spellId = reader.readInt();
 		this.spellLevel = reader.readSByte();
@@ -36,6 +43,7 @@ public class SpellUpgradeSuccessMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on spellLevel = %s, it doesn't respect the following condition : spellLevel < 1 || spellLevel > 6", spellLevel));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.spellId);
 		writer.writeSByte(this.spellLevel);

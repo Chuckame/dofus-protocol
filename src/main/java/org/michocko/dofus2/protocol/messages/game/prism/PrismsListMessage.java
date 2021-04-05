@@ -30,21 +30,29 @@ public class PrismsListMessage implements INetworkMessage {
 		this.prisms = prisms;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.prisms = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			PrismSubareaEmptyInfo entry = ProtocolTypeManager.getInstance().<PrismSubareaEmptyInfo>newInstance(reader.readShort());
+			PrismSubareaEmptyInfo entry = (PrismSubareaEmptyInfo) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.prisms.add(entry);
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.prisms.size());
 		for (PrismSubareaEmptyInfo entry : this.prisms)

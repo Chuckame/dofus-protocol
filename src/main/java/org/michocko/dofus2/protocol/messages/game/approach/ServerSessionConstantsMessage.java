@@ -30,21 +30,29 @@ public class ServerSessionConstantsMessage implements INetworkMessage {
 		this.variables = variables;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.variables = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			ServerSessionConstant entry = ProtocolTypeManager.getInstance().<ServerSessionConstant>newInstance(reader.readShort());
+			ServerSessionConstant entry = (ServerSessionConstant) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.variables.add(entry);
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.variables.size());
 		for (ServerSessionConstant entry : this.variables)

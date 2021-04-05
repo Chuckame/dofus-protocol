@@ -29,10 +29,17 @@ public class GameRolePlaySpellAnimMessage implements INetworkMessage {
 		this.spellLevel = spellLevel;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.casterId = reader.readInt();
 		this.targetCellId = reader.readShort();
@@ -46,6 +53,7 @@ public class GameRolePlaySpellAnimMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on spellLevel = %s, it doesn't respect the following condition : spellLevel < 1 || spellLevel > 6", spellLevel));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.casterId);
 		writer.writeShort(this.targetCellId);

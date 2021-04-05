@@ -27,10 +27,17 @@ public class InventoryPresetSaveMessage implements INetworkMessage {
 		this.saveEquipment = saveEquipment;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.presetId = reader.readSByte();
 		if (presetId < 0)
@@ -41,6 +48,7 @@ public class InventoryPresetSaveMessage implements INetworkMessage {
 		this.saveEquipment = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.presetId);
 		writer.writeSByte(this.symbolId);

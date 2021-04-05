@@ -25,10 +25,17 @@ public class DungeonKeyRingUpdateMessage implements INetworkMessage {
 		this.available = available;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.dungeonId = reader.readShort();
 		if (dungeonId < 0)
@@ -36,6 +43,7 @@ public class DungeonKeyRingUpdateMessage implements INetworkMessage {
 		this.available = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.dungeonId);
 		writer.writeBoolean(this.available);

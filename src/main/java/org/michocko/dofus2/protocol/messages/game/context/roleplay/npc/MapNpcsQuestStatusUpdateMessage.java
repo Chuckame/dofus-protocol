@@ -34,10 +34,17 @@ public class MapNpcsQuestStatusUpdateMessage implements INetworkMessage {
 		this.npcsIdsWithoutQuest = npcsIdsWithoutQuest;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.mapId = reader.readInt();
 		int length = reader.readUShort();
@@ -64,6 +71,7 @@ public class MapNpcsQuestStatusUpdateMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.mapId);
 		writer.writeUShort(this.npcsIdsWithQuest.size());

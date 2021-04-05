@@ -28,10 +28,17 @@ public class ExchangeShopStockMultiMovementUpdatedMessage implements INetworkMes
 		this.objectInfoList = objectInfoList;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.objectInfoList = new LinkedList<>();
@@ -43,6 +50,7 @@ public class ExchangeShopStockMultiMovementUpdatedMessage implements INetworkMes
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.objectInfoList.size());
 		for (ObjectItemToSell entry : this.objectInfoList)

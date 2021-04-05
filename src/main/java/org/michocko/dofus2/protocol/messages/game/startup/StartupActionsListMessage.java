@@ -28,10 +28,17 @@ public class StartupActionsListMessage implements INetworkMessage {
 		this.actions = actions;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.actions = new LinkedList<>();
@@ -43,6 +50,7 @@ public class StartupActionsListMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.actions.size());
 		for (StartupActionAddObject entry : this.actions)

@@ -25,10 +25,17 @@ public class GameActionFightCastOnTargetRequestMessage implements INetworkMessag
 		this.targetId = targetId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.spellId = reader.readShort();
 		if (spellId < 0)
@@ -36,6 +43,7 @@ public class GameActionFightCastOnTargetRequestMessage implements INetworkMessag
 		this.targetId = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.spellId);
 		writer.writeInt(this.targetId);

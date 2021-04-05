@@ -69,7 +69,7 @@ public class FriendOnlineInformations extends FriendInformations {
 		this.guildInfo = new BasicGuildInformations();
 		this.guildInfo.deserialize(reader);
 		this.moodSmileyId = reader.readSByte();
-		this.status = ProtocolTypeManager.getInstance().<PlayerStatus>newInstance(reader.readShort());
+		this.status = (PlayerStatus) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.status.deserialize(reader);
 	}
 	

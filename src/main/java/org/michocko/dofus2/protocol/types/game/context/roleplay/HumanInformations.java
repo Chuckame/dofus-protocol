@@ -47,7 +47,7 @@ public class HumanInformations implements INetworkType {
 		this.options = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			HumanOption entry = ProtocolTypeManager.getInstance().<HumanOption>newInstance(reader.readShort());
+			HumanOption entry = (HumanOption) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.options.add(entry);
 		}

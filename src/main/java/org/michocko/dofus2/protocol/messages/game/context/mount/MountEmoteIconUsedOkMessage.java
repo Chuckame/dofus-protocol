@@ -25,10 +25,17 @@ public class MountEmoteIconUsedOkMessage implements INetworkMessage {
 		this.reactionType = reactionType;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.mountId = reader.readInt();
 		this.reactionType = reader.readSByte();
@@ -36,6 +43,7 @@ public class MountEmoteIconUsedOkMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on reactionType = %s, it doesn't respect the following condition : reactionType < 0", reactionType));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.mountId);
 		writer.writeSByte(this.reactionType);

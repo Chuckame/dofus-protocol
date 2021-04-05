@@ -29,10 +29,17 @@ public class ExchangeMountSterilizeFromPaddockMessage implements INetworkMessage
 		this.sterilizator = sterilizator;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.name = reader.readUTF();
 		this.worldX = reader.readShort();
@@ -44,6 +51,7 @@ public class ExchangeMountSterilizeFromPaddockMessage implements INetworkMessage
 		this.sterilizator = reader.readUTF();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUTF(this.name);
 		writer.writeShort(this.worldX);

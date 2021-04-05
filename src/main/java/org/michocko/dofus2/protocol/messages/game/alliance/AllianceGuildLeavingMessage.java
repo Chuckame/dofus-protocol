@@ -25,15 +25,23 @@ public class AllianceGuildLeavingMessage implements INetworkMessage {
 		this.guildId = guildId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.kicked = reader.readBoolean();
 		this.guildId = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.kicked);
 		writer.writeInt(this.guildId);

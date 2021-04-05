@@ -25,15 +25,23 @@ public class BasicWhoIsRequestMessage implements INetworkMessage {
 		this.search = search;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.verbose = reader.readBoolean();
 		this.search = reader.readUTF();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.verbose);
 		writer.writeUTF(this.search);

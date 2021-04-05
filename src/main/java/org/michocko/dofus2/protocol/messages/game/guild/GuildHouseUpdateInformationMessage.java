@@ -25,15 +25,23 @@ public class GuildHouseUpdateInformationMessage implements INetworkMessage {
 		this.housesInformations = housesInformations;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.housesInformations = new HouseInformationsForGuild();
 		this.housesInformations.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.housesInformations.serialize(writer);
 	}

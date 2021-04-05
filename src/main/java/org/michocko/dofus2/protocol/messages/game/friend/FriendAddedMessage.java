@@ -27,15 +27,23 @@ public class FriendAddedMessage implements INetworkMessage {
 		this.friendAdded = friendAdded;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
-		this.friendAdded = ProtocolTypeManager.getInstance().<FriendInformations>newInstance(reader.readShort());
+		this.friendAdded = (FriendInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.friendAdded.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.friendAdded.getNetworkTypeId());
 		this.friendAdded.serialize(writer);

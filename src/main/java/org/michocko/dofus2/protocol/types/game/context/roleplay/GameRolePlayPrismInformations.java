@@ -38,7 +38,7 @@ public class GameRolePlayPrismInformations extends GameRolePlayActorInformations
 	@Override
 	public void deserialize(IDataReader reader) {
 		super.deserialize(reader);
-		this.prism = ProtocolTypeManager.getInstance().<PrismInformation>newInstance(reader.readShort());
+		this.prism = (PrismInformation) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.prism.deserialize(reader);
 	}
 	

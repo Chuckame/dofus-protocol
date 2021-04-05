@@ -27,10 +27,17 @@ public class ObjectFeedMessage implements INetworkMessage {
 		this.foodQuantity = foodQuantity;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.objectUID = reader.readInt();
 		if (objectUID < 0)
@@ -43,6 +50,7 @@ public class ObjectFeedMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on foodQuantity = %s, it doesn't respect the following condition : foodQuantity < 0", foodQuantity));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.objectUID);
 		writer.writeInt(this.foodUID);

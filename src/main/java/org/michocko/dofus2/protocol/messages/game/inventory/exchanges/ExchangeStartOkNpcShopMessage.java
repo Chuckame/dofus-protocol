@@ -32,10 +32,17 @@ public class ExchangeStartOkNpcShopMessage implements INetworkMessage {
 		this.objectsInfos = objectsInfos;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.npcSellerId = reader.readInt();
 		this.tokenId = reader.readInt();
@@ -51,6 +58,7 @@ public class ExchangeStartOkNpcShopMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.npcSellerId);
 		writer.writeInt(this.tokenId);

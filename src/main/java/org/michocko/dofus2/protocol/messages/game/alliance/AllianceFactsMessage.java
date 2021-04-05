@@ -35,12 +35,19 @@ public class AllianceFactsMessage implements INetworkMessage {
 		this.controlledSubareaIds = controlledSubareaIds;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
-		this.infos = ProtocolTypeManager.getInstance().<AllianceFactSheetInformations>newInstance(reader.readShort());
+		this.infos = (AllianceFactSheetInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.infos.deserialize(reader);
 		int length = reader.readUShort();
 		this.guilds = new LinkedList<>();
@@ -59,6 +66,7 @@ public class AllianceFactsMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.infos.getNetworkTypeId());
 		this.infos.serialize(writer);

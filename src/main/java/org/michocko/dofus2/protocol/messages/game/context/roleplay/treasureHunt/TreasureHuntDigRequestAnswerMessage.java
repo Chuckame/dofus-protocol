@@ -25,10 +25,17 @@ public class TreasureHuntDigRequestAnswerMessage implements INetworkMessage {
 		this.result = result;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.questType = reader.readSByte();
 		if (questType < 0)
@@ -38,6 +45,7 @@ public class TreasureHuntDigRequestAnswerMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on result = %s, it doesn't respect the following condition : result < 0", result));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.questType);
 		writer.writeSByte(this.result);

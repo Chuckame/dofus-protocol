@@ -27,10 +27,17 @@ public class ShortcutBarSwapRequestMessage implements INetworkMessage {
 		this.secondSlot = secondSlot;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.barType = reader.readSByte();
 		if (barType < 0)
@@ -43,6 +50,7 @@ public class ShortcutBarSwapRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on secondSlot = %s, it doesn't respect the following condition : secondSlot < 0 || secondSlot > 99", secondSlot));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.barType);
 		writer.writeInt(this.firstSlot);

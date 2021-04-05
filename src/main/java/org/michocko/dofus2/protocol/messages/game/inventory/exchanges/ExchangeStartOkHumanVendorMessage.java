@@ -30,10 +30,17 @@ public class ExchangeStartOkHumanVendorMessage implements INetworkMessage {
 		this.objectsInfos = objectsInfos;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.sellerId = reader.readInt();
 		if (sellerId < 0)
@@ -48,6 +55,7 @@ public class ExchangeStartOkHumanVendorMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.sellerId);
 		writer.writeUShort(this.objectsInfos.size());

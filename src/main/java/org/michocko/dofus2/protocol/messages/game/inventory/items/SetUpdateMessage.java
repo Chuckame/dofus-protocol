@@ -34,10 +34,17 @@ public class SetUpdateMessage implements INetworkMessage {
 		this.setEffects = setEffects;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.setId = reader.readShort();
 		if (setId < 0)
@@ -53,12 +60,13 @@ public class SetUpdateMessage implements INetworkMessage {
 		this.setEffects = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			ObjectEffect entry = ProtocolTypeManager.getInstance().<ObjectEffect>newInstance(reader.readShort());
+			ObjectEffect entry = (ObjectEffect) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.setEffects.add(entry);
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.setId);
 		writer.writeUShort(this.setObjects.size());

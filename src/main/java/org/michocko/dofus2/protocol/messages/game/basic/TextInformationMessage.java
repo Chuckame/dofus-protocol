@@ -30,10 +30,17 @@ public class TextInformationMessage implements INetworkMessage {
 		this.parameters = parameters;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.msgType = reader.readSByte();
 		if (msgType < 0)
@@ -50,6 +57,7 @@ public class TextInformationMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.msgType);
 		writer.writeShort(this.msgId);

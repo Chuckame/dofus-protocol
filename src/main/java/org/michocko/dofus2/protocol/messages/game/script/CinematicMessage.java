@@ -23,16 +23,24 @@ public class CinematicMessage implements INetworkMessage {
 		this.cinematicId = cinematicId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.cinematicId = reader.readShort();
 		if (cinematicId < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on cinematicId = %s, it doesn't respect the following condition : cinematicId < 0", cinematicId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.cinematicId);
 	}

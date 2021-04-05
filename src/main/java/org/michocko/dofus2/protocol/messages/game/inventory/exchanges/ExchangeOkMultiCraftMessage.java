@@ -27,10 +27,17 @@ public class ExchangeOkMultiCraftMessage implements INetworkMessage {
 		this.role = role;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.initiatorId = reader.readInt();
 		if (initiatorId < 0)
@@ -41,6 +48,7 @@ public class ExchangeOkMultiCraftMessage implements INetworkMessage {
 		this.role = reader.readSByte();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.initiatorId);
 		writer.writeInt(this.otherId);

@@ -86,7 +86,7 @@ public class GuildMember extends CharacterMinimalInformations {
 		if (accountId < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on accountId = %s, it doesn't respect the following condition : accountId < 0", accountId));
 		this.achievementPoints = reader.readInt();
-		this.status = ProtocolTypeManager.getInstance().<PlayerStatus>newInstance(reader.readShort());
+		this.status = (PlayerStatus) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.status.deserialize(reader);
 	}
 	

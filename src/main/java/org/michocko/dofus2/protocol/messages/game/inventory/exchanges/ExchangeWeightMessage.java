@@ -25,10 +25,17 @@ public class ExchangeWeightMessage implements INetworkMessage {
 		this.maxWeight = maxWeight;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.currentWeight = reader.readInt();
 		if (currentWeight < 0)
@@ -38,6 +45,7 @@ public class ExchangeWeightMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on maxWeight = %s, it doesn't respect the following condition : maxWeight < 0", maxWeight));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.currentWeight);
 		writer.writeInt(this.maxWeight);

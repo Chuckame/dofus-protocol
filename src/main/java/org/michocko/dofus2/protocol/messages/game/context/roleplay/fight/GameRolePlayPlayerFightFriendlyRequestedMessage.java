@@ -27,10 +27,17 @@ public class GameRolePlayPlayerFightFriendlyRequestedMessage implements INetwork
 		this.targetId = targetId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.fightId = reader.readInt();
 		if (fightId < 0)
@@ -43,6 +50,7 @@ public class GameRolePlayPlayerFightFriendlyRequestedMessage implements INetwork
 			throw new IllegalArgumentException(String.format("Forbidden value on targetId = %s, it doesn't respect the following condition : targetId < 0", targetId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.fightId);
 		writer.writeInt(this.sourceId);

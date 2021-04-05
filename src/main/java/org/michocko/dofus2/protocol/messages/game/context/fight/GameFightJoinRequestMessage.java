@@ -25,15 +25,23 @@ public class GameFightJoinRequestMessage implements INetworkMessage {
 		this.fightId = fightId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.fighterId = reader.readInt();
 		this.fightId = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.fighterId);
 		writer.writeInt(this.fightId);

@@ -25,15 +25,23 @@ public class JobCrafterDirectoryDefineSettingsMessage implements INetworkMessage
 		this.settings = settings;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.settings = new JobCrafterDirectorySettings();
 		this.settings.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.settings.serialize(writer);
 	}

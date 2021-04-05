@@ -27,10 +27,17 @@ public class MoodSmileyUpdateMessage implements INetworkMessage {
 		this.smileyId = smileyId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.accountId = reader.readInt();
 		if (accountId < 0)
@@ -41,6 +48,7 @@ public class MoodSmileyUpdateMessage implements INetworkMessage {
 		this.smileyId = reader.readSByte();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.accountId);
 		writer.writeInt(this.playerId);

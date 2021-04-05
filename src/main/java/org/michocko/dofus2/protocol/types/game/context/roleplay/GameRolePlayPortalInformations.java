@@ -38,7 +38,7 @@ public class GameRolePlayPortalInformations extends GameRolePlayActorInformation
 	@Override
 	public void deserialize(IDataReader reader) {
 		super.deserialize(reader);
-		this.portal = ProtocolTypeManager.getInstance().<PortalInformation>newInstance(reader.readShort());
+		this.portal = (PortalInformation) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.portal.deserialize(reader);
 	}
 	

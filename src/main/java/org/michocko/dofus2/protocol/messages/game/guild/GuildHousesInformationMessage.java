@@ -28,10 +28,17 @@ public class GuildHousesInformationMessage implements INetworkMessage {
 		this.housesInformations = housesInformations;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.housesInformations = new LinkedList<>();
@@ -43,6 +50,7 @@ public class GuildHousesInformationMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.housesInformations.size());
 		for (HouseInformationsForGuild entry : this.housesInformations)

@@ -30,10 +30,17 @@ public class GameRolePlayArenaFightPropositionMessage implements INetworkMessage
 		this.duration = duration;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.fightId = reader.readInt();
 		if (fightId < 0)
@@ -50,6 +57,7 @@ public class GameRolePlayArenaFightPropositionMessage implements INetworkMessage
 			throw new IllegalArgumentException(String.format("Forbidden value on duration = %s, it doesn't respect the following condition : duration < 0", duration));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.fightId);
 		writer.writeUShort(this.alliesId.size());

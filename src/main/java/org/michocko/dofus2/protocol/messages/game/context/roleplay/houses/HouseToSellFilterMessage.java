@@ -31,10 +31,17 @@ public class HouseToSellFilterMessage implements INetworkMessage {
 		this.maxPrice = maxPrice;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.areaId = reader.readInt();
 		this.atLeastNbRoom = reader.readSByte();
@@ -51,6 +58,7 @@ public class HouseToSellFilterMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on maxPrice = %s, it doesn't respect the following condition : maxPrice < 0", maxPrice));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.areaId);
 		writer.writeSByte(this.atLeastNbRoom);

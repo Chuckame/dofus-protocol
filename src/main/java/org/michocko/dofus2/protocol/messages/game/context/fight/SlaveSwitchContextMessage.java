@@ -40,10 +40,17 @@ public class SlaveSwitchContextMessage implements INetworkMessage {
 		this.shortcuts = shortcuts;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.masterId = reader.readInt();
 		this.slaveId = reader.readInt();
@@ -61,12 +68,13 @@ public class SlaveSwitchContextMessage implements INetworkMessage {
 		this.shortcuts = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			Shortcut entry = ProtocolTypeManager.getInstance().<Shortcut>newInstance(reader.readShort());
+			Shortcut entry = (Shortcut) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.shortcuts.add(entry);
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.masterId);
 		writer.writeInt(this.slaveId);

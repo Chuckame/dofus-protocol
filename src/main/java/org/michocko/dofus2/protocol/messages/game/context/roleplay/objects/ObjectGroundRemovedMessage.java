@@ -23,16 +23,24 @@ public class ObjectGroundRemovedMessage implements INetworkMessage {
 		this.cell = cell;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.cell = reader.readShort();
 		if (cell < 0 || cell > 559)
 			throw new IllegalArgumentException(String.format("Forbidden value on cell = %s, it doesn't respect the following condition : cell < 0 || cell > 559", cell));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.cell);
 	}

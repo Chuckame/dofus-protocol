@@ -27,10 +27,17 @@ public class GameFightRemoveTeamMemberMessage implements INetworkMessage {
 		this.charId = charId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.fightId = reader.readShort();
 		if (fightId < 0)
@@ -41,6 +48,7 @@ public class GameFightRemoveTeamMemberMessage implements INetworkMessage {
 		this.charId = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.fightId);
 		writer.writeSByte(this.teamId);

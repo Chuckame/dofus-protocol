@@ -28,10 +28,17 @@ public class GuildListMessage implements INetworkMessage {
 		this.guilds = guilds;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.guilds = new LinkedList<>();
@@ -43,6 +50,7 @@ public class GuildListMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.guilds.size());
 		for (GuildInformations entry : this.guilds)

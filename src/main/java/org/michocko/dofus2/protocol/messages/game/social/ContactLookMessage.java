@@ -31,10 +31,17 @@ public class ContactLookMessage implements INetworkMessage {
 		this.look = look;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.requestId = reader.readInt();
 		if (requestId < 0)
@@ -47,6 +54,7 @@ public class ContactLookMessage implements INetworkMessage {
 		this.look.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.requestId);
 		writer.writeUTF(this.playerName);

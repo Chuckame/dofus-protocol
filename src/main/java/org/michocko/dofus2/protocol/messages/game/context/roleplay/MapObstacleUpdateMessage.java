@@ -28,10 +28,17 @@ public class MapObstacleUpdateMessage implements INetworkMessage {
 		this.obstacles = obstacles;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.obstacles = new LinkedList<>();
@@ -43,6 +50,7 @@ public class MapObstacleUpdateMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.obstacles.size());
 		for (MapObstacle entry : this.obstacles)

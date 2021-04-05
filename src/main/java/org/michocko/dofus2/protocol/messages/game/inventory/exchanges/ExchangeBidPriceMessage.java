@@ -25,10 +25,17 @@ public class ExchangeBidPriceMessage implements INetworkMessage {
 		this.averagePrice = averagePrice;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.genericId = reader.readInt();
 		if (genericId < 0)
@@ -36,6 +43,7 @@ public class ExchangeBidPriceMessage implements INetworkMessage {
 		this.averagePrice = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.genericId);
 		writer.writeInt(this.averagePrice);

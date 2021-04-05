@@ -25,15 +25,23 @@ public class GuildPaddockBoughtMessage implements INetworkMessage {
 		this.paddockInfo = paddockInfo;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.paddockInfo = new PaddockContentInformations();
 		this.paddockInfo.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.paddockInfo.serialize(writer);
 	}

@@ -23,16 +23,24 @@ public class GuildCharacsUpgradeRequestMessage implements INetworkMessage {
 		this.charaTypeTarget = charaTypeTarget;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.charaTypeTarget = reader.readSByte();
 		if (charaTypeTarget < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on charaTypeTarget = %s, it doesn't respect the following condition : charaTypeTarget < 0", charaTypeTarget));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.charaTypeTarget);
 	}

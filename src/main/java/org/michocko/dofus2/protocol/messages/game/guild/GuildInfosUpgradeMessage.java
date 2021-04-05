@@ -44,10 +44,17 @@ public class GuildInfosUpgradeMessage implements INetworkMessage {
 		this.spellLevel = spellLevel;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.maxTaxCollectorsCount = reader.readSByte();
 		if (maxTaxCollectorsCount < 0)
@@ -89,6 +96,7 @@ public class GuildInfosUpgradeMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.maxTaxCollectorsCount);
 		writer.writeSByte(this.taxCollectorsCount);

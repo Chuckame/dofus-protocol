@@ -30,7 +30,12 @@ public class GameActionFightSlideMessage extends AbstractGameActionMessage {
 	}
 	
 	@Override
-	public int getNetworkMessageId() {
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	

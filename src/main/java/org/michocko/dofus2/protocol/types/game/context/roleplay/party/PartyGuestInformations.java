@@ -62,7 +62,7 @@ public class PartyGuestInformations implements INetworkType {
 		this.guestLook.deserialize(reader);
 		this.breed = reader.readSByte();
 		this.sex = reader.readBoolean();
-		this.status = ProtocolTypeManager.getInstance().<PlayerStatus>newInstance(reader.readShort());
+		this.status = (PlayerStatus) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.status.deserialize(reader);
 		int length = reader.readUShort();
 		this.companions = new LinkedList<>();

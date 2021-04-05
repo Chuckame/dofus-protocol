@@ -27,10 +27,17 @@ public class TeleportToBuddyAnswerMessage implements INetworkMessage {
 		this.accept = accept;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.dungeonId = reader.readShort();
 		if (dungeonId < 0)
@@ -41,6 +48,7 @@ public class TeleportToBuddyAnswerMessage implements INetworkMessage {
 		this.accept = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.dungeonId);
 		writer.writeInt(this.buddyId);

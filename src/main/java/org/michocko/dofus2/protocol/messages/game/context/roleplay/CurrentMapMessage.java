@@ -25,10 +25,17 @@ public class CurrentMapMessage implements INetworkMessage {
 		this.mapKey = mapKey;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.mapId = reader.readInt();
 		if (mapId < 0)
@@ -36,6 +43,7 @@ public class CurrentMapMessage implements INetworkMessage {
 		this.mapKey = reader.readUTF();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.mapId);
 		writer.writeUTF(this.mapKey);

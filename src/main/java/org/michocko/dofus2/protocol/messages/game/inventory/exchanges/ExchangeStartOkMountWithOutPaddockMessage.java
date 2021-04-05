@@ -28,10 +28,17 @@ public class ExchangeStartOkMountWithOutPaddockMessage implements INetworkMessag
 		this.stabledMountsDescription = stabledMountsDescription;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.stabledMountsDescription = new LinkedList<>();
@@ -43,6 +50,7 @@ public class ExchangeStartOkMountWithOutPaddockMessage implements INetworkMessag
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.stabledMountsDescription.size());
 		for (MountClientData entry : this.stabledMountsDescription)

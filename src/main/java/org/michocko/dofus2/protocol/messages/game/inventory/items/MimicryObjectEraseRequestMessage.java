@@ -25,10 +25,17 @@ public class MimicryObjectEraseRequestMessage implements INetworkMessage {
 		this.hostPos = hostPos;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.hostUID = reader.readInt();
 		if (hostUID < 0)
@@ -38,6 +45,7 @@ public class MimicryObjectEraseRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on hostPos = %s, it doesn't respect the following condition : hostPos < 0 || hostPos > 255", hostPos));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.hostUID);
 		writer.writeByte(this.hostPos);

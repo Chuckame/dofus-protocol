@@ -23,16 +23,24 @@ public class MountEquipedErrorMessage implements INetworkMessage {
 		this.errorType = errorType;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.errorType = reader.readSByte();
 		if (errorType < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on errorType = %s, it doesn't respect the following condition : errorType < 0", errorType));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.errorType);
 	}

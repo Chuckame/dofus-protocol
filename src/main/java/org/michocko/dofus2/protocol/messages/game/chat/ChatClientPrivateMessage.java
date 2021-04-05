@@ -26,7 +26,12 @@ public class ChatClientPrivateMessage extends ChatAbstractClientMessage {
 	}
 	
 	@Override
-	public int getNetworkMessageId() {
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	

@@ -25,10 +25,17 @@ public class ExchangeHandleMountStableMessage implements INetworkMessage {
 		this.rideId = rideId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.actionType = reader.readSByte();
 		this.rideId = reader.readInt();
@@ -36,6 +43,7 @@ public class ExchangeHandleMountStableMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on rideId = %s, it doesn't respect the following condition : rideId < 0", rideId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.actionType);
 		writer.writeInt(this.rideId);

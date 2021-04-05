@@ -25,10 +25,17 @@ public class JobListedUpdateMessage implements INetworkMessage {
 		this.jobId = jobId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.addedOrDeleted = reader.readBoolean();
 		this.jobId = reader.readSByte();
@@ -36,6 +43,7 @@ public class JobListedUpdateMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on jobId = %s, it doesn't respect the following condition : jobId < 0", jobId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.addedOrDeleted);
 		writer.writeSByte(this.jobId);

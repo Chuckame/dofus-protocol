@@ -40,10 +40,17 @@ public class TreasureHuntMessage implements INetworkMessage {
 		this.availableRetryCount = availableRetryCount;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.questType = reader.readSByte();
 		if (questType < 0)
@@ -55,7 +62,7 @@ public class TreasureHuntMessage implements INetworkMessage {
 		this.stepList = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			TreasureHuntStep entry = ProtocolTypeManager.getInstance().<TreasureHuntStep>newInstance(reader.readShort());
+			TreasureHuntStep entry = (TreasureHuntStep) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.stepList.add(entry);
 		}
@@ -68,6 +75,7 @@ public class TreasureHuntMessage implements INetworkMessage {
 		this.availableRetryCount = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.questType);
 		writer.writeInt(this.startMapId);

@@ -28,10 +28,17 @@ public class GameContextMoveMultipleElementsMessage implements INetworkMessage {
 		this.movements = movements;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.movements = new LinkedList<>();
@@ -43,6 +50,7 @@ public class GameContextMoveMultipleElementsMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.movements.size());
 		for (EntityMovementInformations entry : this.movements)

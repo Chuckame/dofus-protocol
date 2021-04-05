@@ -25,15 +25,23 @@ public class MountRenamedMessage implements INetworkMessage {
 		this.name = name;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.mountId = reader.readDouble();
 		this.name = reader.readUTF();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeDouble(this.mountId);
 		writer.writeUTF(this.name);

@@ -27,15 +27,23 @@ public class GameFightShowFighterMessage implements INetworkMessage {
 		this.informations = informations;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
-		this.informations = ProtocolTypeManager.getInstance().<GameFightFighterInformations>newInstance(reader.readShort());
+		this.informations = (GameFightFighterInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.informations.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.informations.getNetworkTypeId());
 		this.informations.serialize(writer);

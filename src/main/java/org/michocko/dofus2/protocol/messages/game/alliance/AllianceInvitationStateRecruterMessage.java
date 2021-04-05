@@ -25,10 +25,17 @@ public class AllianceInvitationStateRecruterMessage implements INetworkMessage {
 		this.invitationState = invitationState;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.recrutedName = reader.readUTF();
 		this.invitationState = reader.readSByte();
@@ -36,6 +43,7 @@ public class AllianceInvitationStateRecruterMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on invitationState = %s, it doesn't respect the following condition : invitationState < 0", invitationState));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUTF(this.recrutedName);
 		writer.writeSByte(this.invitationState);

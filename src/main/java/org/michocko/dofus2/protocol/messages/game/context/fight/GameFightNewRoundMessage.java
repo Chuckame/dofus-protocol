@@ -23,16 +23,24 @@ public class GameFightNewRoundMessage implements INetworkMessage {
 		this.roundNumber = roundNumber;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.roundNumber = reader.readInt();
 		if (roundNumber < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on roundNumber = %s, it doesn't respect the following condition : roundNumber < 0", roundNumber));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.roundNumber);
 	}

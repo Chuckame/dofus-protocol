@@ -25,10 +25,17 @@ public class KrosmasterTransferMessage implements INetworkMessage {
 		this.failure = failure;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.uid = reader.readUTF();
 		this.failure = reader.readSByte();
@@ -36,6 +43,7 @@ public class KrosmasterTransferMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on failure = %s, it doesn't respect the following condition : failure < 0", failure));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUTF(this.uid);
 		writer.writeSByte(this.failure);

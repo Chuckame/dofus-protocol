@@ -49,10 +49,17 @@ public class MapComplementaryInformationsDataMessage implements INetworkMessage 
 		this.fights = fights;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.subAreaId = reader.readShort();
 		if (subAreaId < 0)
@@ -64,7 +71,7 @@ public class MapComplementaryInformationsDataMessage implements INetworkMessage 
 		this.houses = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			HouseInformations entry = ProtocolTypeManager.getInstance().<HouseInformations>newInstance(reader.readShort());
+			HouseInformations entry = (HouseInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.houses.add(entry);
 		}
@@ -72,7 +79,7 @@ public class MapComplementaryInformationsDataMessage implements INetworkMessage 
 		this.actors = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			GameRolePlayActorInformations entry = ProtocolTypeManager.getInstance().<GameRolePlayActorInformations>newInstance(reader.readShort());
+			GameRolePlayActorInformations entry = (GameRolePlayActorInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.actors.add(entry);
 		}
@@ -80,7 +87,7 @@ public class MapComplementaryInformationsDataMessage implements INetworkMessage 
 		this.interactiveElements = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			InteractiveElement entry = ProtocolTypeManager.getInstance().<InteractiveElement>newInstance(reader.readShort());
+			InteractiveElement entry = (InteractiveElement) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.interactiveElements.add(entry);
 		}
@@ -110,6 +117,7 @@ public class MapComplementaryInformationsDataMessage implements INetworkMessage 
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.subAreaId);
 		writer.writeInt(this.mapId);

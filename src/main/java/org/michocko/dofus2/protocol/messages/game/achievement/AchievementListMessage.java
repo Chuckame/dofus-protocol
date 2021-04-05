@@ -30,10 +30,17 @@ public class AchievementListMessage implements INetworkMessage {
 		this.rewardableAchievements = rewardableAchievements;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.finishedAchievementsIds = new LinkedList<>();
@@ -52,6 +59,7 @@ public class AchievementListMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.finishedAchievementsIds.size());
 		for (short entry : this.finishedAchievementsIds)

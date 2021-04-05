@@ -25,10 +25,17 @@ public class LivingObjectDissociateMessage implements INetworkMessage {
 		this.livingPosition = livingPosition;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.livingUID = reader.readInt();
 		if (livingUID < 0)
@@ -38,6 +45,7 @@ public class LivingObjectDissociateMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on livingPosition = %s, it doesn't respect the following condition : livingPosition < 0 || livingPosition > 255", livingPosition));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.livingUID);
 		writer.writeByte(this.livingPosition);

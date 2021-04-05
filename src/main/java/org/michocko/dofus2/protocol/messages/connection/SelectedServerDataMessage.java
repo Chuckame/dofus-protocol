@@ -31,10 +31,17 @@ public class SelectedServerDataMessage implements INetworkMessage {
 		this.ticket = ticket;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.serverId = reader.readShort();
 		this.address = reader.readUTF();
@@ -45,6 +52,7 @@ public class SelectedServerDataMessage implements INetworkMessage {
 		this.ticket = reader.readUTF();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.serverId);
 		writer.writeUTF(this.address);

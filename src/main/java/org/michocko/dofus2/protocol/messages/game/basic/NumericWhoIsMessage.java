@@ -25,10 +25,17 @@ public class NumericWhoIsMessage implements INetworkMessage {
 		this.accountId = accountId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.playerId = reader.readInt();
 		if (playerId < 0)
@@ -38,6 +45,7 @@ public class NumericWhoIsMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on accountId = %s, it doesn't respect the following condition : accountId < 0", accountId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.playerId);
 		writer.writeInt(this.accountId);

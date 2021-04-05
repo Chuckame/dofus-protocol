@@ -25,10 +25,17 @@ public class ExchangeReplyTaxVendorMessage implements INetworkMessage {
 		this.totalTaxValue = totalTaxValue;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.objectValue = reader.readInt();
 		if (objectValue < 0)
@@ -38,6 +45,7 @@ public class ExchangeReplyTaxVendorMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on totalTaxValue = %s, it doesn't respect the following condition : totalTaxValue < 0", totalTaxValue));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.objectValue);
 		writer.writeInt(this.totalTaxValue);

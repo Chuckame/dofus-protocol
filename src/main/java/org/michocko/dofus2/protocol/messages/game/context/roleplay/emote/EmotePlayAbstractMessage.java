@@ -25,10 +25,17 @@ public class EmotePlayAbstractMessage implements INetworkMessage {
 		this.emoteStartTime = emoteStartTime;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.emoteId = reader.readByte();
 		if (emoteId < 0 || emoteId > 255)
@@ -36,6 +43,7 @@ public class EmotePlayAbstractMessage implements INetworkMessage {
 		this.emoteStartTime = reader.readDouble();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeByte(this.emoteId);
 		writer.writeDouble(this.emoteStartTime);

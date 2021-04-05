@@ -25,15 +25,23 @@ public class MountDataMessage implements INetworkMessage {
 		this.mountData = mountData;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.mountData = new MountClientData();
 		this.mountData.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.mountData.serialize(writer);
 	}

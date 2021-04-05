@@ -28,10 +28,17 @@ public class ChallengeTargetsListMessage implements INetworkMessage {
 		this.targetCells = targetCells;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.targetIds = new LinkedList<>();
@@ -49,6 +56,7 @@ public class ChallengeTargetsListMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.targetIds.size());
 		for (int entry : this.targetIds)

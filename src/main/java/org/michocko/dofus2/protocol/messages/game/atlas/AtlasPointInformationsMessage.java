@@ -25,15 +25,23 @@ public class AtlasPointInformationsMessage implements INetworkMessage {
 		this.type = type;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.type = new AtlasPointsInformations();
 		this.type.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.type.serialize(writer);
 	}

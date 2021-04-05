@@ -25,10 +25,17 @@ public class ExchangeBidHouseBuyResultMessage implements INetworkMessage {
 		this.bought = bought;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.uid = reader.readInt();
 		if (uid < 0)
@@ -36,6 +43,7 @@ public class ExchangeBidHouseBuyResultMessage implements INetworkMessage {
 		this.bought = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.uid);
 		writer.writeBoolean(this.bought);

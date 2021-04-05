@@ -25,10 +25,17 @@ public class PrismFightJoinLeaveRequestMessage implements INetworkMessage {
 		this.join = join;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.subAreaId = reader.readShort();
 		if (subAreaId < 0)
@@ -36,6 +43,7 @@ public class PrismFightJoinLeaveRequestMessage implements INetworkMessage {
 		this.join = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.subAreaId);
 		writer.writeBoolean(this.join);

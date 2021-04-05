@@ -23,16 +23,24 @@ public class MountXpRatioMessage implements INetworkMessage {
 		this.ratio = ratio;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.ratio = reader.readSByte();
 		if (ratio < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on ratio = %s, it doesn't respect the following condition : ratio < 0", ratio));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.ratio);
 	}

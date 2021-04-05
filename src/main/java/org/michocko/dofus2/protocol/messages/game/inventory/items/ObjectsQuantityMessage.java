@@ -28,10 +28,17 @@ public class ObjectsQuantityMessage implements INetworkMessage {
 		this.objectsUIDAndQty = objectsUIDAndQty;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.objectsUIDAndQty = new LinkedList<>();
@@ -43,6 +50,7 @@ public class ObjectsQuantityMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.objectsUIDAndQty.size());
 		for (ObjectItemQuantity entry : this.objectsUIDAndQty)

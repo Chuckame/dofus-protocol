@@ -32,10 +32,17 @@ public class DungeonPartyFinderRoomContentUpdateMessage implements INetworkMessa
 		this.removedPlayersIds = removedPlayersIds;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.dungeonId = reader.readShort();
 		if (dungeonId < 0)
@@ -57,6 +64,7 @@ public class DungeonPartyFinderRoomContentUpdateMessage implements INetworkMessa
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.dungeonId);
 		writer.writeUShort(this.addedPlayers.size());

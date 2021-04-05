@@ -23,14 +23,22 @@ public class ExchangeBidHouseGenericItemRemovedMessage implements INetworkMessag
 		this.objGenericId = objGenericId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.objGenericId = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.objGenericId);
 	}

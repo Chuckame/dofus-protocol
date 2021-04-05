@@ -39,12 +39,19 @@ public class GuildFactsMessage implements INetworkMessage {
 		this.members = members;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
-		this.infos = ProtocolTypeManager.getInstance().<GuildFactSheetInformations>newInstance(reader.readShort());
+		this.infos = (GuildFactSheetInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.infos.deserialize(reader);
 		this.creationDate = reader.readInt();
 		if (creationDate < 0)
@@ -63,6 +70,7 @@ public class GuildFactsMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.infos.getNetworkTypeId());
 		this.infos.serialize(writer);

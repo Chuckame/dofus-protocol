@@ -29,10 +29,17 @@ public class GuildJoinedMessage implements INetworkMessage {
 		this.enabled = enabled;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.guildInfo = new GuildInformations();
 		this.guildInfo.deserialize(reader);
@@ -42,6 +49,7 @@ public class GuildJoinedMessage implements INetworkMessage {
 		this.enabled = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.guildInfo.serialize(writer);
 		writer.writeUInt(this.memberRights);

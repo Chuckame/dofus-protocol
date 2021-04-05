@@ -25,15 +25,23 @@ public class StatedElementUpdatedMessage implements INetworkMessage {
 		this.statedElement = statedElement;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.statedElement = new StatedElement();
 		this.statedElement.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.statedElement.serialize(writer);
 	}

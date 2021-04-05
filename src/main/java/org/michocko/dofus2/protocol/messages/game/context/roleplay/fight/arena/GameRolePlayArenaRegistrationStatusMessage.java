@@ -27,10 +27,17 @@ public class GameRolePlayArenaRegistrationStatusMessage implements INetworkMessa
 		this.battleMode = battleMode;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.registered = reader.readBoolean();
 		this.step = reader.readSByte();
@@ -41,6 +48,7 @@ public class GameRolePlayArenaRegistrationStatusMessage implements INetworkMessa
 			throw new IllegalArgumentException(String.format("Forbidden value on battleMode = %s, it doesn't respect the following condition : battleMode < 0", battleMode));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.registered);
 		writer.writeSByte(this.step);

@@ -25,10 +25,17 @@ public class UpdateLifePointsMessage implements INetworkMessage {
 		this.maxLifePoints = maxLifePoints;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.lifePoints = reader.readInt();
 		if (lifePoints < 0)
@@ -38,6 +45,7 @@ public class UpdateLifePointsMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on maxLifePoints = %s, it doesn't respect the following condition : maxLifePoints < 0", maxLifePoints));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.lifePoints);
 		writer.writeInt(this.maxLifePoints);

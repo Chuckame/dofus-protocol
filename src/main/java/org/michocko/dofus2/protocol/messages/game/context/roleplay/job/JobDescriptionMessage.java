@@ -28,10 +28,17 @@ public class JobDescriptionMessage implements INetworkMessage {
 		this.jobsDescription = jobsDescription;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.jobsDescription = new LinkedList<>();
@@ -43,6 +50,7 @@ public class JobDescriptionMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.jobsDescription.size());
 		for (JobDescription entry : this.jobsDescription)

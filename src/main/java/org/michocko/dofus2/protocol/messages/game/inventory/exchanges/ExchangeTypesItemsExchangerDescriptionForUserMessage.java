@@ -28,10 +28,17 @@ public class ExchangeTypesItemsExchangerDescriptionForUserMessage implements INe
 		this.itemTypeDescriptions = itemTypeDescriptions;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.itemTypeDescriptions = new LinkedList<>();
@@ -43,6 +50,7 @@ public class ExchangeTypesItemsExchangerDescriptionForUserMessage implements INe
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.itemTypeDescriptions.size());
 		for (BidExchangerObjectInfo entry : this.itemTypeDescriptions)

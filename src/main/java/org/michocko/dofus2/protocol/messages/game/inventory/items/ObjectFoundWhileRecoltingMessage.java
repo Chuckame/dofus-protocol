@@ -27,10 +27,17 @@ public class ObjectFoundWhileRecoltingMessage implements INetworkMessage {
 		this.ressourceGenericId = ressourceGenericId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.genericId = reader.readInt();
 		if (genericId < 0)
@@ -43,6 +50,7 @@ public class ObjectFoundWhileRecoltingMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on ressourceGenericId = %s, it doesn't respect the following condition : ressourceGenericId < 0", ressourceGenericId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.genericId);
 		writer.writeInt(this.quantity);

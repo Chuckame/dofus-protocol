@@ -28,10 +28,17 @@ public class GameMapMovementRequestMessage implements INetworkMessage {
 		this.mapId = mapId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.keyMovements = new LinkedList<>();
@@ -45,6 +52,7 @@ public class GameMapMovementRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on mapId = %s, it doesn't respect the following condition : mapId < 0", mapId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.keyMovements.size());
 		for (short entry : this.keyMovements)

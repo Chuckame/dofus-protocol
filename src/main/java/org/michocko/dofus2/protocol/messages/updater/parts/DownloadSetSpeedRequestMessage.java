@@ -23,16 +23,24 @@ public class DownloadSetSpeedRequestMessage implements INetworkMessage {
 		this.downloadSpeed = downloadSpeed;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.downloadSpeed = reader.readSByte();
 		if (downloadSpeed < 1 || downloadSpeed > 10)
 			throw new IllegalArgumentException(String.format("Forbidden value on downloadSpeed = %s, it doesn't respect the following condition : downloadSpeed < 1 || downloadSpeed > 10", downloadSpeed));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.downloadSpeed);
 	}

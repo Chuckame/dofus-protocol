@@ -25,10 +25,17 @@ public class AbstractGameActionMessage implements INetworkMessage {
 		this.sourceId = sourceId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.actionId = reader.readShort();
 		if (actionId < 0)
@@ -36,6 +43,7 @@ public class AbstractGameActionMessage implements INetworkMessage {
 		this.sourceId = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.actionId);
 		writer.writeInt(this.sourceId);

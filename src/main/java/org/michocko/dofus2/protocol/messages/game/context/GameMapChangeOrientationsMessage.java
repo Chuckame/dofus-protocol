@@ -28,10 +28,17 @@ public class GameMapChangeOrientationsMessage implements INetworkMessage {
 		this.orientations = orientations;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.orientations = new LinkedList<>();
@@ -43,6 +50,7 @@ public class GameMapChangeOrientationsMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.orientations.size());
 		for (ActorOrientation entry : this.orientations)

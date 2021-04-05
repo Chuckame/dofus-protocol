@@ -23,16 +23,24 @@ public class EmotePlayErrorMessage implements INetworkMessage {
 		this.emoteId = emoteId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.emoteId = reader.readByte();
 		if (emoteId < 0 || emoteId > 255)
 			throw new IllegalArgumentException(String.format("Forbidden value on emoteId = %s, it doesn't respect the following condition : emoteId < 0 || emoteId > 255", emoteId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeByte(this.emoteId);
 	}

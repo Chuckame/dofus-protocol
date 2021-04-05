@@ -51,7 +51,7 @@ public class PrismFightersInformation implements INetworkType {
 		this.allyCharactersInformations = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			CharacterMinimalPlusLookInformations entry = ProtocolTypeManager.getInstance().<CharacterMinimalPlusLookInformations>newInstance(reader.readShort());
+			CharacterMinimalPlusLookInformations entry = (CharacterMinimalPlusLookInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.allyCharactersInformations.add(entry);
 		}
@@ -59,7 +59,7 @@ public class PrismFightersInformation implements INetworkType {
 		this.enemyCharactersInformations = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			CharacterMinimalPlusLookInformations entry = ProtocolTypeManager.getInstance().<CharacterMinimalPlusLookInformations>newInstance(reader.readShort());
+			CharacterMinimalPlusLookInformations entry = (CharacterMinimalPlusLookInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.enemyCharactersInformations.add(entry);
 		}

@@ -23,14 +23,22 @@ public class ExchangeStartedMessage implements INetworkMessage {
 		this.exchangeType = exchangeType;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.exchangeType = reader.readSByte();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.exchangeType);
 	}

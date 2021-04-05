@@ -30,21 +30,29 @@ public class InteractiveMapUpdateMessage implements INetworkMessage {
 		this.interactiveElements = interactiveElements;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.interactiveElements = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			InteractiveElement entry = ProtocolTypeManager.getInstance().<InteractiveElement>newInstance(reader.readShort());
+			InteractiveElement entry = (InteractiveElement) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.interactiveElements.add(entry);
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.interactiveElements.size());
 		for (InteractiveElement entry : this.interactiveElements)

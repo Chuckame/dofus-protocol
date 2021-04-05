@@ -30,10 +30,17 @@ public class NotificationByServerMessage implements INetworkMessage {
 		this.forceOpen = forceOpen;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.id = reader.readUShort();
 		if (id < 0 || id > 65535)
@@ -48,6 +55,7 @@ public class NotificationByServerMessage implements INetworkMessage {
 		this.forceOpen = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.id);
 		writer.writeUShort(this.parameters.size());

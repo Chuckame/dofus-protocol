@@ -36,10 +36,17 @@ public class CharacterCreationRequestMessage implements INetworkMessage {
 		this.cosmeticId = cosmeticId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.name = reader.readUTF();
 		this.breed = PlayableBreedEnum.valueOf(reader.readSByte());
@@ -58,6 +65,7 @@ public class CharacterCreationRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on cosmeticId = %s, it doesn't respect the following condition : cosmeticId < 0", cosmeticId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUTF(this.name);
 		writer.writeSByte((byte)this.breed.getValue());

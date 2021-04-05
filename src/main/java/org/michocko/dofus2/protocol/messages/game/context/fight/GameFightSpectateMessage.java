@@ -33,10 +33,17 @@ public class GameFightSpectateMessage implements INetworkMessage {
 		this.gameTurn = gameTurn;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.effects = new LinkedList<>();
@@ -59,6 +66,7 @@ public class GameFightSpectateMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on gameTurn = %s, it doesn't respect the following condition : gameTurn < 0", gameTurn));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.effects.size());
 		for (FightDispellableEffectExtendedInformations entry : this.effects)

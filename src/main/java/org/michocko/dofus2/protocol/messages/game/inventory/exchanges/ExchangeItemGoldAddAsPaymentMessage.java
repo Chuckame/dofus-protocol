@@ -25,10 +25,17 @@ public class ExchangeItemGoldAddAsPaymentMessage implements INetworkMessage {
 		this.quantity = quantity;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.paymentType = reader.readSByte();
 		this.quantity = reader.readInt();
@@ -36,6 +43,7 @@ public class ExchangeItemGoldAddAsPaymentMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on quantity = %s, it doesn't respect the following condition : quantity < 0", quantity));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.paymentType);
 		writer.writeInt(this.quantity);

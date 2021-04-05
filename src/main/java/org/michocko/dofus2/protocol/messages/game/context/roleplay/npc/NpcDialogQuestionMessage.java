@@ -30,10 +30,17 @@ public class NpcDialogQuestionMessage implements INetworkMessage {
 		this.visibleReplies = visibleReplies;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.messageId = reader.readShort();
 		if (messageId < 0)
@@ -54,6 +61,7 @@ public class NpcDialogQuestionMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.messageId);
 		writer.writeUShort(this.dialogParams.size());

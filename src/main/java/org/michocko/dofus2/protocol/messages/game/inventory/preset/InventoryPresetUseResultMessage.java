@@ -30,10 +30,17 @@ public class InventoryPresetUseResultMessage implements INetworkMessage {
 		this.unlinkedPosition = unlinkedPosition;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.presetId = reader.readSByte();
 		if (presetId < 0)
@@ -50,6 +57,7 @@ public class InventoryPresetUseResultMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.presetId);
 		writer.writeSByte(this.code);

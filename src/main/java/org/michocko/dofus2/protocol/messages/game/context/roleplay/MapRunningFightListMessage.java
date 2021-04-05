@@ -28,10 +28,17 @@ public class MapRunningFightListMessage implements INetworkMessage {
 		this.fights = fights;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.fights = new LinkedList<>();
@@ -43,6 +50,7 @@ public class MapRunningFightListMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.fights.size());
 		for (FightExternalInformations entry : this.fights)

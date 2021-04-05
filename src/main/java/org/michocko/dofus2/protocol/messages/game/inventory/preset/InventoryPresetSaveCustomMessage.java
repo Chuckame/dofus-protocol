@@ -32,10 +32,17 @@ public class InventoryPresetSaveCustomMessage implements INetworkMessage {
 		this.itemsUids = itemsUids;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.presetId = reader.readSByte();
 		if (presetId < 0)
@@ -59,6 +66,7 @@ public class InventoryPresetSaveCustomMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.presetId);
 		writer.writeSByte(this.symbolId);

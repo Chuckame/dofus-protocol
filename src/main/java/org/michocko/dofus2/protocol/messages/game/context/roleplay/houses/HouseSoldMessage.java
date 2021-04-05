@@ -27,10 +27,17 @@ public class HouseSoldMessage implements INetworkMessage {
 		this.buyerName = buyerName;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.houseId = reader.readInt();
 		if (houseId < 0)
@@ -41,6 +48,7 @@ public class HouseSoldMessage implements INetworkMessage {
 		this.buyerName = reader.readUTF();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.houseId);
 		writer.writeInt(this.realPrice);

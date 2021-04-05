@@ -25,10 +25,17 @@ public class QueueStatusMessage implements INetworkMessage {
 		this.total = total;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.position = reader.readUShort();
 		if (position < 0 || position > 65535)
@@ -38,6 +45,7 @@ public class QueueStatusMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on total = %s, it doesn't respect the following condition : total < 0 || total > 65535", total));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.position);
 		writer.writeUShort(this.total);

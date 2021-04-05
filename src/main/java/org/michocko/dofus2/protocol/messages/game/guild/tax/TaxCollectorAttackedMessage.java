@@ -37,10 +37,17 @@ public class TaxCollectorAttackedMessage implements INetworkMessage {
 		this.guild = guild;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.firstNameId = reader.readShort();
 		if (firstNameId < 0)
@@ -62,6 +69,7 @@ public class TaxCollectorAttackedMessage implements INetworkMessage {
 		this.guild.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.firstNameId);
 		writer.writeShort(this.lastNameId);

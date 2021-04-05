@@ -25,15 +25,23 @@ public class TaxCollectorStateUpdateMessage implements INetworkMessage {
 		this.state = state;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.uniqueId = reader.readInt();
 		this.state = reader.readSByte();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.uniqueId);
 		writer.writeSByte(this.state);

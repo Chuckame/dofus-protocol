@@ -25,10 +25,17 @@ public class TreasureHuntAvailableRetryCountUpdateMessage implements INetworkMes
 		this.availableRetryCount = availableRetryCount;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.questType = reader.readSByte();
 		if (questType < 0)
@@ -36,6 +43,7 @@ public class TreasureHuntAvailableRetryCountUpdateMessage implements INetworkMes
 		this.availableRetryCount = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.questType);
 		writer.writeInt(this.availableRetryCount);

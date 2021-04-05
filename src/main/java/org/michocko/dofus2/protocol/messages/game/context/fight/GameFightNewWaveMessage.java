@@ -27,10 +27,17 @@ public class GameFightNewWaveMessage implements INetworkMessage {
 		this.nbTurnBeforeNextWave = nbTurnBeforeNextWave;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.id = reader.readUInt();
 		if (id < 0 || id > 4.294967295E9)
@@ -39,6 +46,7 @@ public class GameFightNewWaveMessage implements INetworkMessage {
 		this.nbTurnBeforeNextWave = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUInt(this.id);
 		writer.writeInt(this.teamId);

@@ -49,7 +49,7 @@ public class PrismGeolocalizedInformation extends PrismSubareaEmptyInfo {
 		if (worldY < -255 || worldY > 255)
 			throw new IllegalArgumentException(String.format("Forbidden value on worldY = %s, it doesn't respect the following condition : worldY < -255 || worldY > 255", worldY));
 		this.mapId = reader.readInt();
-		this.prism = ProtocolTypeManager.getInstance().<PrismInformation>newInstance(reader.readShort());
+		this.prism = (PrismInformation) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.prism.deserialize(reader);
 	}
 	

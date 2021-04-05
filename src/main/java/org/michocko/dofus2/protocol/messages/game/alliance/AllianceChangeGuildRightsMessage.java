@@ -25,10 +25,17 @@ public class AllianceChangeGuildRightsMessage implements INetworkMessage {
 		this.rights = rights;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.guildId = reader.readInt();
 		if (guildId < 0)
@@ -38,6 +45,7 @@ public class AllianceChangeGuildRightsMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on rights = %s, it doesn't respect the following condition : rights < 0", rights));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.guildId);
 		writer.writeSByte(this.rights);

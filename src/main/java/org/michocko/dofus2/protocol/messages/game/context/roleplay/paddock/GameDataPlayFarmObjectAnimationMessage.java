@@ -26,10 +26,17 @@ public class GameDataPlayFarmObjectAnimationMessage implements INetworkMessage {
 		this.cellId = cellId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.cellId = new LinkedList<>();
@@ -40,6 +47,7 @@ public class GameDataPlayFarmObjectAnimationMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.cellId.size());
 		for (short entry : this.cellId)

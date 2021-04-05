@@ -25,10 +25,17 @@ public class TreasureHuntRequestMessage implements INetworkMessage {
 		this.questType = questType;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.questLevel = reader.readByte();
 		if (questLevel < 1 || questLevel > 200)
@@ -38,6 +45,7 @@ public class TreasureHuntRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on questType = %s, it doesn't respect the following condition : questType < 0", questType));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeByte(this.questLevel);
 		writer.writeSByte(this.questType);

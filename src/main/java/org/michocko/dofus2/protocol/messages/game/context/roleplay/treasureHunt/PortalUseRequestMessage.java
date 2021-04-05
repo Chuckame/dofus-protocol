@@ -23,16 +23,24 @@ public class PortalUseRequestMessage implements INetworkMessage {
 		this.portalId = portalId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.portalId = reader.readInt();
 		if (portalId < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on portalId = %s, it doesn't respect the following condition : portalId < 0", portalId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.portalId);
 	}

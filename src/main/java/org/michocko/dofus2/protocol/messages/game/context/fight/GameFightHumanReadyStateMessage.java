@@ -25,10 +25,17 @@ public class GameFightHumanReadyStateMessage implements INetworkMessage {
 		this.isReady = isReady;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.characterId = reader.readInt();
 		if (characterId < 0)
@@ -36,6 +43,7 @@ public class GameFightHumanReadyStateMessage implements INetworkMessage {
 		this.isReady = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.characterId);
 		writer.writeBoolean(this.isReady);

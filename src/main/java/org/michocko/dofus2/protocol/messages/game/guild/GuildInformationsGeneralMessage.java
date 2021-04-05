@@ -35,10 +35,17 @@ public class GuildInformationsGeneralMessage implements INetworkMessage {
 		this.nbConnectedMembers = nbConnectedMembers;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.level = reader.readByte();
 		if (level < 0 || level > 255)
@@ -63,6 +70,7 @@ public class GuildInformationsGeneralMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on nbConnectedMembers = %s, it doesn't respect the following condition : nbConnectedMembers < 0", nbConnectedMembers));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeByte(this.level);
 		writer.writeDouble(this.expLevelFloor);

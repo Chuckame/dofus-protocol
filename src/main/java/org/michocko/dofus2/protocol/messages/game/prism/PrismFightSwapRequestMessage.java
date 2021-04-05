@@ -25,10 +25,17 @@ public class PrismFightSwapRequestMessage implements INetworkMessage {
 		this.targetId = targetId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.subAreaId = reader.readShort();
 		if (subAreaId < 0)
@@ -38,6 +45,7 @@ public class PrismFightSwapRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on targetId = %s, it doesn't respect the following condition : targetId < 0", targetId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.subAreaId);
 		writer.writeInt(this.targetId);

@@ -25,10 +25,17 @@ public class StartupActionsObjetAttributionMessage implements INetworkMessage {
 		this.characterId = characterId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.actionId = reader.readInt();
 		if (actionId < 0)
@@ -38,6 +45,7 @@ public class StartupActionsObjetAttributionMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on characterId = %s, it doesn't respect the following condition : characterId < 0", characterId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.actionId);
 		writer.writeInt(this.characterId);

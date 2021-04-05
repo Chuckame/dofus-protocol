@@ -27,16 +27,24 @@ public class ExchangeItemPaymentForCraftMessage implements INetworkMessage {
 		this.object = object;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.onlySuccess = reader.readBoolean();
 		this.object = new ObjectItemNotInContainer();
 		this.object.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.onlySuccess);
 		this.object.serialize(writer);

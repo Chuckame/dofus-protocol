@@ -25,10 +25,17 @@ public class ObjectMovementMessage implements INetworkMessage {
 		this.position = position;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.objectUID = reader.readInt();
 		if (objectUID < 0)
@@ -38,6 +45,7 @@ public class ObjectMovementMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on position = %s, it doesn't respect the following condition : position < 0 || position > 255", position));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.objectUID);
 		writer.writeByte(this.position);

@@ -25,10 +25,17 @@ public class DebugInClientMessage implements INetworkMessage {
 		this.message = message;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.level = reader.readSByte();
 		if (level < 0)
@@ -36,6 +43,7 @@ public class DebugInClientMessage implements INetworkMessage {
 		this.message = reader.readUTF();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.level);
 		writer.writeUTF(this.message);

@@ -36,10 +36,17 @@ public class ExchangeBidHouseInListAddedMessage implements INetworkMessage {
 		this.prices = prices;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.itemUID = reader.readInt();
 		this.objGenericId = reader.readInt();
@@ -47,7 +54,7 @@ public class ExchangeBidHouseInListAddedMessage implements INetworkMessage {
 		this.effects = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			ObjectEffect entry = ProtocolTypeManager.getInstance().<ObjectEffect>newInstance(reader.readShort());
+			ObjectEffect entry = (ObjectEffect) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.effects.add(entry);
 		}
@@ -60,6 +67,7 @@ public class ExchangeBidHouseInListAddedMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.itemUID);
 		writer.writeInt(this.objGenericId);

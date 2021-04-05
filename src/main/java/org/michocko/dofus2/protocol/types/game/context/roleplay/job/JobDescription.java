@@ -44,7 +44,7 @@ public class JobDescription implements INetworkType {
 		this.skills = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			SkillActionDescription entry = ProtocolTypeManager.getInstance().<SkillActionDescription>newInstance(reader.readShort());
+			SkillActionDescription entry = (SkillActionDescription) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.skills.add(entry);
 		}

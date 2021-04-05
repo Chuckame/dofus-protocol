@@ -89,7 +89,7 @@ public class PartyMemberInformations extends CharacterBaseInformations {
 		this.subAreaId = reader.readShort();
 		if (subAreaId < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on subAreaId = %s, it doesn't respect the following condition : subAreaId < 0", subAreaId));
-		this.status = ProtocolTypeManager.getInstance().<PlayerStatus>newInstance(reader.readShort());
+		this.status = (PlayerStatus) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.status.deserialize(reader);
 		int length = reader.readUShort();
 		this.companions = new LinkedList<>();

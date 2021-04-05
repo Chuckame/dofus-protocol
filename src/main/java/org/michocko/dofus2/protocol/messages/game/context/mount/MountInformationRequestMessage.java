@@ -25,15 +25,23 @@ public class MountInformationRequestMessage implements INetworkMessage {
 		this.time = time;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.id = reader.readDouble();
 		this.time = reader.readDouble();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeDouble(this.id);
 		writer.writeDouble(this.time);

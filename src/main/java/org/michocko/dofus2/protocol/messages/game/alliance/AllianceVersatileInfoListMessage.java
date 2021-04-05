@@ -28,10 +28,17 @@ public class AllianceVersatileInfoListMessage implements INetworkMessage {
 		this.alliances = alliances;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.alliances = new LinkedList<>();
@@ -43,6 +50,7 @@ public class AllianceVersatileInfoListMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.alliances.size());
 		for (AllianceVersatileInformations entry : this.alliances)

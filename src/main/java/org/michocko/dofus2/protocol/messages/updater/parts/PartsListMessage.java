@@ -28,10 +28,17 @@ public class PartsListMessage implements INetworkMessage {
 		this.parts = parts;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.parts = new LinkedList<>();
@@ -43,6 +50,7 @@ public class PartsListMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.parts.size());
 		for (ContentPart entry : this.parts)

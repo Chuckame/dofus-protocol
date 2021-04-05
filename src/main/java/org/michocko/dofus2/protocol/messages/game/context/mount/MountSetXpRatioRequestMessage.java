@@ -23,16 +23,24 @@ public class MountSetXpRatioRequestMessage implements INetworkMessage {
 		this.xpRatio = xpRatio;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.xpRatio = reader.readSByte();
 		if (xpRatio < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on xpRatio = %s, it doesn't respect the following condition : xpRatio < 0", xpRatio));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.xpRatio);
 	}

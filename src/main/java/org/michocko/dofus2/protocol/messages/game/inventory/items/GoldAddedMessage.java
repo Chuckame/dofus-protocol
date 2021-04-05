@@ -25,15 +25,23 @@ public class GoldAddedMessage implements INetworkMessage {
 		this.gold = gold;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.gold = new GoldItem();
 		this.gold.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.gold.serialize(writer);
 	}

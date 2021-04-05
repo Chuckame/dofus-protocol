@@ -27,10 +27,17 @@ public class SelectedServerRefusedMessage implements INetworkMessage {
 		this.serverStatus = serverStatus;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.serverId = reader.readShort();
 		this.error = reader.readSByte();
@@ -41,6 +48,7 @@ public class SelectedServerRefusedMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on serverStatus = %s, it doesn't respect the following condition : serverStatus < 0", serverStatus));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.serverId);
 		writer.writeSByte(this.error);

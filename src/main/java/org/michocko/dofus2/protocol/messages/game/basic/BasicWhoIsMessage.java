@@ -44,10 +44,17 @@ public class BasicWhoIsMessage implements INetworkMessage {
 		this.playerState = playerState;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.position = reader.readSByte();
 		this.accountNickname = reader.readUTF();
@@ -63,7 +70,7 @@ public class BasicWhoIsMessage implements INetworkMessage {
 		this.socialGroups = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			AbstractSocialGroupInfos entry = ProtocolTypeManager.getInstance().<AbstractSocialGroupInfos>newInstance(reader.readShort());
+			AbstractSocialGroupInfos entry = (AbstractSocialGroupInfos) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.socialGroups.add(entry);
 		}
@@ -72,6 +79,7 @@ public class BasicWhoIsMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on playerState = %s, it doesn't respect the following condition : playerState < 0", playerState));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.position);
 		writer.writeUTF(this.accountNickname);

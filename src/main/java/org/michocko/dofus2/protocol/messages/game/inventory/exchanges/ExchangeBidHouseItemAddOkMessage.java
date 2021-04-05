@@ -25,15 +25,23 @@ public class ExchangeBidHouseItemAddOkMessage implements INetworkMessage {
 		this.itemInfo = itemInfo;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.itemInfo = new ObjectItemToSellInBid();
 		this.itemInfo.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.itemInfo.serialize(writer);
 	}

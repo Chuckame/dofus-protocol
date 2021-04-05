@@ -28,10 +28,17 @@ public class KrosmasterInventoryMessage implements INetworkMessage {
 		this.figures = figures;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.figures = new LinkedList<>();
@@ -43,6 +50,7 @@ public class KrosmasterInventoryMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.figures.size());
 		for (KrosmasterFigure entry : this.figures)

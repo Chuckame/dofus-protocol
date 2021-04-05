@@ -23,16 +23,24 @@ public class StatsUpgradeResultMessage implements INetworkMessage {
 		this.nbCharacBoost = nbCharacBoost;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.nbCharacBoost = reader.readShort();
 		if (nbCharacBoost < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on nbCharacBoost = %s, it doesn't respect the following condition : nbCharacBoost < 0", nbCharacBoost));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.nbCharacBoost);
 	}

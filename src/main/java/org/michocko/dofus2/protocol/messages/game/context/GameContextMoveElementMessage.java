@@ -25,15 +25,23 @@ public class GameContextMoveElementMessage implements INetworkMessage {
 		this.movement = movement;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.movement = new EntityMovementInformations();
 		this.movement.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.movement.serialize(writer);
 	}

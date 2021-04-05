@@ -32,22 +32,30 @@ public class UpdateMountBoostMessage implements INetworkMessage {
 		this.boostToUpdateList = boostToUpdateList;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.rideId = reader.readDouble();
 		int length = reader.readUShort();
 		this.boostToUpdateList = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			UpdateMountBoost entry = ProtocolTypeManager.getInstance().<UpdateMountBoost>newInstance(reader.readShort());
+			UpdateMountBoost entry = (UpdateMountBoost) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.boostToUpdateList.add(entry);
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeDouble(this.rideId);
 		writer.writeUShort(this.boostToUpdateList.size());

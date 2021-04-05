@@ -25,10 +25,17 @@ public class AlignmentRankUpdateMessage implements INetworkMessage {
 		this.verbose = verbose;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.alignmentRank = reader.readSByte();
 		if (alignmentRank < 0)
@@ -36,6 +43,7 @@ public class AlignmentRankUpdateMessage implements INetworkMessage {
 		this.verbose = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.alignmentRank);
 		writer.writeBoolean(this.verbose);

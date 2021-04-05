@@ -27,16 +27,24 @@ public class GuildCreationValidMessage implements INetworkMessage {
 		this.guildEmblem = guildEmblem;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.guildName = reader.readUTF();
 		this.guildEmblem = new GuildEmblem();
 		this.guildEmblem.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUTF(this.guildName);
 		this.guildEmblem.serialize(writer);

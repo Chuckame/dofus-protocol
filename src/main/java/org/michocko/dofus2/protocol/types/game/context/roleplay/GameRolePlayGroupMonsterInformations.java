@@ -44,7 +44,7 @@ public class GameRolePlayGroupMonsterInformations extends GameRolePlayActorInfor
 	@Override
 	public void deserialize(IDataReader reader) {
 		super.deserialize(reader);
-		this.staticInfos = ProtocolTypeManager.getInstance().<GroupMonsterStaticInformations>newInstance(reader.readShort());
+		this.staticInfos = (GroupMonsterStaticInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.staticInfos.deserialize(reader);
 		this.ageBonus = reader.readShort();
 		if (ageBonus < -1 || ageBonus > 1000)

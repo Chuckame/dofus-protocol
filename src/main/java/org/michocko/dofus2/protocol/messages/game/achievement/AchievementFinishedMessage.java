@@ -25,10 +25,17 @@ public class AchievementFinishedMessage implements INetworkMessage {
 		this.finishedlevel = finishedlevel;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.id = reader.readShort();
 		if (id < 0)
@@ -38,6 +45,7 @@ public class AchievementFinishedMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on finishedlevel = %s, it doesn't respect the following condition : finishedlevel < 0 || finishedlevel > 200", finishedlevel));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.id);
 		writer.writeShort(this.finishedlevel);

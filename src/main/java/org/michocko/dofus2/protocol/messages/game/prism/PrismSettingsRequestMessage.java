@@ -25,10 +25,17 @@ public class PrismSettingsRequestMessage implements INetworkMessage {
 		this.startDefenseTime = startDefenseTime;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.subAreaId = reader.readShort();
 		if (subAreaId < 0)
@@ -38,6 +45,7 @@ public class PrismSettingsRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on startDefenseTime = %s, it doesn't respect the following condition : startDefenseTime < 0", startDefenseTime));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.subAreaId);
 		writer.writeSByte(this.startDefenseTime);

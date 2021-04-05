@@ -25,15 +25,23 @@ public class FriendDeleteResultMessage implements INetworkMessage {
 		this.name = name;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.success = reader.readBoolean();
 		this.name = reader.readUTF();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.success);
 		writer.writeUTF(this.name);

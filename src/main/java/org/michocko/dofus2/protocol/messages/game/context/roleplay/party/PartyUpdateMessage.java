@@ -29,14 +29,19 @@ public class PartyUpdateMessage extends AbstractPartyEventMessage {
 	}
 	
 	@Override
-	public int getNetworkMessageId() {
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
 	@Override
 	public void deserialize(IDataReader reader) {
 		super.deserialize(reader);
-		this.memberInformations = ProtocolTypeManager.getInstance().<PartyMemberInformations>newInstance(reader.readShort());
+		this.memberInformations = (PartyMemberInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.memberInformations.deserialize(reader);
 	}
 	

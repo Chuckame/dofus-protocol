@@ -25,10 +25,17 @@ public class ExchangeGoldPaymentForCraftMessage implements INetworkMessage {
 		this.goldSum = goldSum;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.onlySuccess = reader.readBoolean();
 		this.goldSum = reader.readInt();
@@ -36,6 +43,7 @@ public class ExchangeGoldPaymentForCraftMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on goldSum = %s, it doesn't respect the following condition : goldSum < 0", goldSum));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.onlySuccess);
 		writer.writeInt(this.goldSum);

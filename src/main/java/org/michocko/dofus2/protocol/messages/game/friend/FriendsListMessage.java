@@ -30,21 +30,29 @@ public class FriendsListMessage implements INetworkMessage {
 		this.friendsList = friendsList;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.friendsList = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			FriendInformations entry = ProtocolTypeManager.getInstance().<FriendInformations>newInstance(reader.readShort());
+			FriendInformations entry = (FriendInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.friendsList.add(entry);
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.friendsList.size());
 		for (FriendInformations entry : this.friendsList)

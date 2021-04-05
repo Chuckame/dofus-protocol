@@ -23,16 +23,24 @@ public class DocumentReadingBeginMessage implements INetworkMessage {
 		this.documentId = documentId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.documentId = reader.readShort();
 		if (documentId < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on documentId = %s, it doesn't respect the following condition : documentId < 0", documentId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.documentId);
 	}

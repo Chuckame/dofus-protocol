@@ -25,10 +25,17 @@ public class MailStatusMessage implements INetworkMessage {
 		this.total = total;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.unread = reader.readShort();
 		if (unread < 0)
@@ -38,6 +45,7 @@ public class MailStatusMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on total = %s, it doesn't respect the following condition : total < 0", total));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.unread);
 		writer.writeShort(this.total);

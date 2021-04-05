@@ -27,10 +27,17 @@ public class InventoryPresetItemUpdateRequestMessage implements INetworkMessage 
 		this.objUid = objUid;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.presetId = reader.readSByte();
 		if (presetId < 0)
@@ -43,6 +50,7 @@ public class InventoryPresetItemUpdateRequestMessage implements INetworkMessage 
 			throw new IllegalArgumentException(String.format("Forbidden value on objUid = %s, it doesn't respect the following condition : objUid < 0", objUid));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.presetId);
 		writer.writeByte(this.position);

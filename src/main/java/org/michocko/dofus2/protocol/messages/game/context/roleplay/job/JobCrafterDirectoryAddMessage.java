@@ -25,15 +25,23 @@ public class JobCrafterDirectoryAddMessage implements INetworkMessage {
 		this.listEntry = listEntry;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.listEntry = new JobCrafterDirectoryListEntry();
 		this.listEntry.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.listEntry.serialize(writer);
 	}

@@ -26,10 +26,17 @@ public class StorageObjectsRemoveMessage implements INetworkMessage {
 		this.objectUIDList = objectUIDList;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.objectUIDList = new LinkedList<>();
@@ -40,6 +47,7 @@ public class StorageObjectsRemoveMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.objectUIDList.size());
 		for (int entry : this.objectUIDList)

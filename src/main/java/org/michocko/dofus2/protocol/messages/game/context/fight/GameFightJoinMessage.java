@@ -25,10 +25,17 @@ public class GameFightJoinMessage implements INetworkMessage {
 		this.fightType = fightType;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.timeMaxBeforeFightStart = reader.readInt();
 		if (timeMaxBeforeFightStart < 0)
@@ -38,6 +45,7 @@ public class GameFightJoinMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on fightType = %s, it doesn't respect the following condition : fightType < 0", fightType));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.timeMaxBeforeFightStart);
 		writer.writeSByte(this.fightType);

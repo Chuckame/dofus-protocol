@@ -26,10 +26,17 @@ public class ObjectsDeletedMessage implements INetworkMessage {
 		this.objectUID = objectUID;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.objectUID = new LinkedList<>();
@@ -40,6 +47,7 @@ public class ObjectsDeletedMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.objectUID.size());
 		for (int entry : this.objectUID)

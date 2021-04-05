@@ -34,10 +34,17 @@ public class JobCrafterDirectoryEntryMessage implements INetworkMessage {
 		this.playerLook = playerLook;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.playerInfo = new JobCrafterDirectoryEntryPlayerInfo();
 		this.playerInfo.deserialize(reader);
@@ -53,6 +60,7 @@ public class JobCrafterDirectoryEntryMessage implements INetworkMessage {
 		this.playerLook.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.playerInfo.serialize(writer);
 		writer.writeUShort(this.jobInfoList.size());

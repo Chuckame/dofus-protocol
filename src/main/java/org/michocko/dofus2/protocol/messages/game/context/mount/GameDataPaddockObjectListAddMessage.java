@@ -28,10 +28,17 @@ public class GameDataPaddockObjectListAddMessage implements INetworkMessage {
 		this.paddockItemDescription = paddockItemDescription;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.paddockItemDescription = new LinkedList<>();
@@ -43,6 +50,7 @@ public class GameDataPaddockObjectListAddMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.paddockItemDescription.size());
 		for (PaddockItem entry : this.paddockItemDescription)

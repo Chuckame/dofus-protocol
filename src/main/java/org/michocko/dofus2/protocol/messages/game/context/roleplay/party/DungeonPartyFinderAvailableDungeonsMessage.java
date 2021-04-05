@@ -26,10 +26,17 @@ public class DungeonPartyFinderAvailableDungeonsMessage implements INetworkMessa
 		this.dungeonIds = dungeonIds;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.dungeonIds = new LinkedList<>();
@@ -40,6 +47,7 @@ public class DungeonPartyFinderAvailableDungeonsMessage implements INetworkMessa
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.dungeonIds.size());
 		for (short entry : this.dungeonIds)

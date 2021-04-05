@@ -27,10 +27,17 @@ public class NpcGenericActionRequestMessage implements INetworkMessage {
 		this.npcMapId = npcMapId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.npcId = reader.readInt();
 		this.npcActionId = reader.readSByte();
@@ -39,6 +46,7 @@ public class NpcGenericActionRequestMessage implements INetworkMessage {
 		this.npcMapId = reader.readInt();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.npcId);
 		writer.writeSByte(this.npcActionId);

@@ -31,10 +31,17 @@ public class PlayerStatusUpdateMessage implements INetworkMessage {
 		this.status = status;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.accountId = reader.readInt();
 		if (accountId < 0)
@@ -42,10 +49,11 @@ public class PlayerStatusUpdateMessage implements INetworkMessage {
 		this.playerId = reader.readInt();
 		if (playerId < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on playerId = %s, it doesn't respect the following condition : playerId < 0", playerId));
-		this.status = ProtocolTypeManager.getInstance().<PlayerStatus>newInstance(reader.readShort());
+		this.status = (PlayerStatus) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.status.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.accountId);
 		writer.writeInt(this.playerId);

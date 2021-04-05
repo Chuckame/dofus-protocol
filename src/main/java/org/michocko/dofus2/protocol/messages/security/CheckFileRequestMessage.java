@@ -25,10 +25,17 @@ public class CheckFileRequestMessage implements INetworkMessage {
 		this.type = type;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.filename = reader.readUTF();
 		this.type = reader.readSByte();
@@ -36,6 +43,7 @@ public class CheckFileRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on type = %s, it doesn't respect the following condition : type < 0", type));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUTF(this.filename);
 		writer.writeSByte(this.type);

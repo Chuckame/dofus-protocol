@@ -42,7 +42,7 @@ public class GameRolePlayTaxCollectorInformations extends GameRolePlayActorInfor
 	@Override
 	public void deserialize(IDataReader reader) {
 		super.deserialize(reader);
-		this.identification = ProtocolTypeManager.getInstance().<TaxCollectorStaticInformations>newInstance(reader.readShort());
+		this.identification = (TaxCollectorStaticInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.identification.deserialize(reader);
 		this.guildLevel = reader.readByte();
 		if (guildLevel < 0 || guildLevel > 255)

@@ -30,10 +30,17 @@ public class ConsoleCommandsListMessage implements INetworkMessage {
 		this.descriptions = descriptions;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.aliases = new LinkedList<>();
@@ -58,6 +65,7 @@ public class ConsoleCommandsListMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.aliases.size());
 		for (String entry : this.aliases)

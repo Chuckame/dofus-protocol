@@ -25,10 +25,17 @@ public class GameRolePlayAggressionMessage implements INetworkMessage {
 		this.defenderId = defenderId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.attackerId = reader.readInt();
 		if (attackerId < 0)
@@ -38,6 +45,7 @@ public class GameRolePlayAggressionMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on defenderId = %s, it doesn't respect the following condition : defenderId < 0", defenderId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.attackerId);
 		writer.writeInt(this.defenderId);

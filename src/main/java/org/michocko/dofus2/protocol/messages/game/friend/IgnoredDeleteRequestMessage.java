@@ -25,10 +25,17 @@ public class IgnoredDeleteRequestMessage implements INetworkMessage {
 		this.session = session;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.accountId = reader.readInt();
 		if (accountId < 0)
@@ -36,6 +43,7 @@ public class IgnoredDeleteRequestMessage implements INetworkMessage {
 		this.session = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.accountId);
 		writer.writeBoolean(this.session);

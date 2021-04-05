@@ -27,16 +27,24 @@ public class PartInfoMessage implements INetworkMessage {
 		this.installationPercent = installationPercent;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.part = new ContentPart();
 		this.part.deserialize(reader);
 		this.installationPercent = reader.readFloat();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.part.serialize(writer);
 		writer.writeFloat(this.installationPercent);

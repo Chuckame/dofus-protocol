@@ -26,10 +26,17 @@ public class EmoteListMessage implements INetworkMessage {
 		this.emoteIds = emoteIds;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.emoteIds = new LinkedList<>();
@@ -40,6 +47,7 @@ public class EmoteListMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.emoteIds.size());
 		for (short entry : this.emoteIds)

@@ -35,10 +35,17 @@ public class TaxCollectorListMessage implements INetworkMessage {
 		this.fightersInformations = fightersInformations;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.nbcollectorMax = reader.readSByte();
 		if (nbcollectorMax < 0)
@@ -47,7 +54,7 @@ public class TaxCollectorListMessage implements INetworkMessage {
 		this.informations = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			TaxCollectorInformations entry = ProtocolTypeManager.getInstance().<TaxCollectorInformations>newInstance(reader.readShort());
+			TaxCollectorInformations entry = (TaxCollectorInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.informations.add(entry);
 		}
@@ -61,6 +68,7 @@ public class TaxCollectorListMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.nbcollectorMax);
 		writer.writeUShort(this.informations.size());

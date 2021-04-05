@@ -25,10 +25,17 @@ public class BasicAckMessage implements INetworkMessage {
 		this.lastPacketId = lastPacketId;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.seq = reader.readInt();
 		if (seq < 0)
@@ -38,6 +45,7 @@ public class BasicAckMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on lastPacketId = %s, it doesn't respect the following condition : lastPacketId < 0", lastPacketId));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.seq);
 		writer.writeShort(this.lastPacketId);

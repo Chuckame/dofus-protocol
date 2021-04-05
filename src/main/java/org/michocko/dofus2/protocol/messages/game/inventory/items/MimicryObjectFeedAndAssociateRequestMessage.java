@@ -35,10 +35,17 @@ public class MimicryObjectFeedAndAssociateRequestMessage implements INetworkMess
 		this.preview = preview;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.mimicryUID = reader.readInt();
 		if (mimicryUID < 0)
@@ -61,6 +68,7 @@ public class MimicryObjectFeedAndAssociateRequestMessage implements INetworkMess
 		this.preview = reader.readBoolean();
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.mimicryUID);
 		writer.writeByte(this.mimicryPos);

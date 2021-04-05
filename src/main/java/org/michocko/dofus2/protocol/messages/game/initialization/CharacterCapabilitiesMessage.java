@@ -23,16 +23,24 @@ public class CharacterCapabilitiesMessage implements INetworkMessage {
 		this.guildEmblemSymbolCategories = guildEmblemSymbolCategories;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.guildEmblemSymbolCategories = reader.readInt();
 		if (guildEmblemSymbolCategories < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on guildEmblemSymbolCategories = %s, it doesn't respect the following condition : guildEmblemSymbolCategories < 0", guildEmblemSymbolCategories));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.guildEmblemSymbolCategories);
 	}

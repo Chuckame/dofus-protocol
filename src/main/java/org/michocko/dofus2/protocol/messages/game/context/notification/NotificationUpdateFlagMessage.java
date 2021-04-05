@@ -23,16 +23,24 @@ public class NotificationUpdateFlagMessage implements INetworkMessage {
 		this.index = index;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.index = reader.readShort();
 		if (index < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on index = %s, it doesn't respect the following condition : index < 0", index));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.index);
 	}

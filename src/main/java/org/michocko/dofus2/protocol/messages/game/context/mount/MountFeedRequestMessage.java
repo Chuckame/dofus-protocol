@@ -29,10 +29,17 @@ public class MountFeedRequestMessage implements INetworkMessage {
 		this.quantity = quantity;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.mountUid = reader.readDouble();
 		if (mountUid < 0)
@@ -46,6 +53,7 @@ public class MountFeedRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on quantity = %s, it doesn't respect the following condition : quantity < 0", quantity));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeDouble(this.mountUid);
 		writer.writeSByte(this.mountLocation);

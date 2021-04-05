@@ -28,10 +28,17 @@ public class ObjectGroundListAddedMessage implements INetworkMessage {
 		this.referenceIds = referenceIds;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.cells = new LinkedList<>();
@@ -49,6 +56,7 @@ public class ObjectGroundListAddedMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.cells.size());
 		for (short entry : this.cells)

@@ -27,10 +27,17 @@ public class PaddockSellBuyDialogMessage implements INetworkMessage {
 		this.price = price;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.bsell = reader.readBoolean();
 		this.ownerId = reader.readInt();
@@ -41,6 +48,7 @@ public class PaddockSellBuyDialogMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on price = %s, it doesn't respect the following condition : price < 0", price));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.bsell);
 		writer.writeInt(this.ownerId);

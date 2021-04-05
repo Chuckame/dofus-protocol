@@ -30,10 +30,17 @@ public class AchievementDetailedListMessage implements INetworkMessage {
 		this.finishedAchievements = finishedAchievements;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.startedAchievements = new LinkedList<>();
@@ -53,6 +60,7 @@ public class AchievementDetailedListMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.startedAchievements.size());
 		for (Achievement entry : this.startedAchievements)

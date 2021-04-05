@@ -27,10 +27,17 @@ public class BasicLatencyStatsMessage implements INetworkMessage {
 		this.max = max;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.latency = reader.readUShort();
 		if (latency < 0 || latency > 65535)
@@ -43,6 +50,7 @@ public class BasicLatencyStatsMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on max = %s, it doesn't respect the following condition : max < 0", max));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.latency);
 		writer.writeShort(this.sampleCount);

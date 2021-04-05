@@ -27,10 +27,17 @@ public class GameFightUpdateTeamMessage implements INetworkMessage {
 		this.team = team;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.fightId = reader.readShort();
 		if (fightId < 0)
@@ -39,6 +46,7 @@ public class GameFightUpdateTeamMessage implements INetworkMessage {
 		this.team.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeShort(this.fightId);
 		this.team.serialize(writer);

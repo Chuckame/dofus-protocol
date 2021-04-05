@@ -40,7 +40,7 @@ public class GameContextActorInformations implements INetworkType {
 		this.contextualId = reader.readInt();
 		this.look = new EntityLook();
 		this.look.deserialize(reader);
-		this.disposition = ProtocolTypeManager.getInstance().<EntityDispositionInformations>newInstance(reader.readShort());
+		this.disposition = (EntityDispositionInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 		this.disposition.deserialize(reader);
 	}
 	

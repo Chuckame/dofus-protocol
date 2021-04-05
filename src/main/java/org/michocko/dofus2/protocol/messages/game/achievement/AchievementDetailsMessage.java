@@ -25,15 +25,23 @@ public class AchievementDetailsMessage implements INetworkMessage {
 		this.achievement = achievement;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.achievement = new Achievement();
 		this.achievement.deserialize(reader);
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.achievement.serialize(writer);
 	}

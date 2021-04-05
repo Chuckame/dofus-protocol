@@ -25,10 +25,17 @@ public class ExchangeReadyMessage implements INetworkMessage {
 		this.step = step;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.ready = reader.readBoolean();
 		this.step = reader.readShort();
@@ -36,6 +43,7 @@ public class ExchangeReadyMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on step = %s, it doesn't respect the following condition : step < 0", step));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeBoolean(this.ready);
 		writer.writeShort(this.step);

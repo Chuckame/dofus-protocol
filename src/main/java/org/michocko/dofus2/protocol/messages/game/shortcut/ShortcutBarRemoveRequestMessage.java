@@ -25,10 +25,17 @@ public class ShortcutBarRemoveRequestMessage implements INetworkMessage {
 		this.slot = slot;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.barType = reader.readSByte();
 		if (barType < 0)
@@ -38,6 +45,7 @@ public class ShortcutBarRemoveRequestMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on slot = %s, it doesn't respect the following condition : slot < 0 || slot > 99", slot));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.barType);
 		writer.writeInt(this.slot);

@@ -35,10 +35,17 @@ public class IdentificationSuccessMessage implements INetworkMessage {
 		this.accountCreation = accountCreation;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.login = reader.readUTF();
 		this.nickname = reader.readUTF();
@@ -57,6 +64,7 @@ public class IdentificationSuccessMessage implements INetworkMessage {
 			throw new IllegalArgumentException(String.format("Forbidden value on accountCreation = %s, it doesn't respect the following condition : accountCreation < 0", accountCreation));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUTF(this.login);
 		writer.writeUTF(this.nickname);

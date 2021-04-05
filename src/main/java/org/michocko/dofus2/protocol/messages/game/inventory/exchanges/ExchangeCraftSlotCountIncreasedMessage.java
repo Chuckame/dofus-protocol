@@ -23,16 +23,24 @@ public class ExchangeCraftSlotCountIncreasedMessage implements INetworkMessage {
 		this.newMaxSlot = newMaxSlot;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.newMaxSlot = reader.readSByte();
 		if (newMaxSlot < 0)
 			throw new IllegalArgumentException(String.format("Forbidden value on newMaxSlot = %s, it doesn't respect the following condition : newMaxSlot < 0", newMaxSlot));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeSByte(this.newMaxSlot);
 	}

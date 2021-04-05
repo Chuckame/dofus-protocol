@@ -49,7 +49,7 @@ public class InteractiveElement implements INetworkType {
 		this.enabledSkills = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			InteractiveElementSkill entry = ProtocolTypeManager.getInstance().<InteractiveElementSkill>newInstance(reader.readShort());
+			InteractiveElementSkill entry = (InteractiveElementSkill) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.enabledSkills.add(entry);
 		}
@@ -57,7 +57,7 @@ public class InteractiveElement implements INetworkType {
 		this.disabledSkills = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			InteractiveElementSkill entry = ProtocolTypeManager.getInstance().<InteractiveElementSkill>newInstance(reader.readShort());
+			InteractiveElementSkill entry = (InteractiveElementSkill) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.disabledSkills.add(entry);
 		}

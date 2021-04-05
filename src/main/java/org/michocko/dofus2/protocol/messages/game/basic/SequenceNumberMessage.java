@@ -23,16 +23,24 @@ public class SequenceNumberMessage implements INetworkMessage {
 		this.number = number;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.number = reader.readUShort();
 		if (number < 0 || number > 65535)
 			throw new IllegalArgumentException(String.format("Forbidden value on number = %s, it doesn't respect the following condition : number < 0 || number > 65535", number));
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.number);
 	}

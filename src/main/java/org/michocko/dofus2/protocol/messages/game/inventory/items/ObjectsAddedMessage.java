@@ -28,10 +28,17 @@ public class ObjectsAddedMessage implements INetworkMessage {
 		this.object = object;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		int length = reader.readUShort();
 		this.object = new LinkedList<>();
@@ -43,6 +50,7 @@ public class ObjectsAddedMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeUShort(this.object.size());
 		for (ObjectItem entry : this.object)

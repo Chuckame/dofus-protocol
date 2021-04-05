@@ -31,10 +31,17 @@ public class ExchangeStartedBidSellerMessage implements INetworkMessage {
 		this.objectsInfos = objectsInfos;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.sellerDescriptor = new SellerBuyerDescriptor();
 		this.sellerDescriptor.deserialize(reader);
@@ -48,6 +55,7 @@ public class ExchangeStartedBidSellerMessage implements INetworkMessage {
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		this.sellerDescriptor.serialize(writer);
 		writer.writeUShort(this.objectsInfos.size());

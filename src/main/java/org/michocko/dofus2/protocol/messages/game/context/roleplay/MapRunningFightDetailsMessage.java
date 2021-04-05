@@ -34,10 +34,17 @@ public class MapRunningFightDetailsMessage implements INetworkMessage {
 		this.defenders = defenders;
 	}
 	
-	public int getNetworkMessageId() {
+	@Override
+	public boolean containsNoField() {
+		return false;
+	}
+	
+	@Override
+	public int getNetworkComponentId() {
 		return MESSAGE_ID;
 	}
 	
+	@Override
 	public void deserialize(IDataReader reader) {
 		this.fightId = reader.readInt();
 		if (fightId < 0)
@@ -46,7 +53,7 @@ public class MapRunningFightDetailsMessage implements INetworkMessage {
 		this.attackers = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			GameFightFighterLightInformations entry = ProtocolTypeManager.getInstance().<GameFightFighterLightInformations>newInstance(reader.readShort());
+			GameFightFighterLightInformations entry = (GameFightFighterLightInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.attackers.add(entry);
 		}
@@ -54,12 +61,13 @@ public class MapRunningFightDetailsMessage implements INetworkMessage {
 		this.defenders = new LinkedList<>();
 		for (int i = 0; i < length; i++)
 		{
-			GameFightFighterLightInformations entry = ProtocolTypeManager.getInstance().<GameFightFighterLightInformations>newInstance(reader.readShort());
+			GameFightFighterLightInformations entry = (GameFightFighterLightInformations) ProtocolTypeManager.getInstance().newInstance(reader.readShort());
 			entry.deserialize(reader);
 			this.defenders.add(entry);
 		}
 	}
 	
+	@Override
 	public void serialize(IDataWriter writer) {
 		writer.writeInt(this.fightId);
 		writer.writeUShort(this.attackers.size());
